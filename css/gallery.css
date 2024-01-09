@@ -1,0 +1,67 @@
+ul.models {
+    width: 101%;
+}
+ul.models li {
+    display: inline-block;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    position: relative;
+    width: 32.28%;
+}
+
+span.roll {
+    background-color:#009944;
+	background-image:url(../images/link_icon.png);
+	background-position:center center;
+	background-repeat:no-repeat;
+    height:100%;
+    position: absolute;
+    width:100%;
+    z-index: 10;
+} 
+
+.nav_control{
+float:right;
+}
+
+.nav_control span{
+background-color: #202020;
+background-repeat: no-repeat;
+height: 25px;
+text-align: center;
+width: 25px;
+display:inline-block;
+}
+
+
+
+.nav_control .prev_btn:hover,
+.nav_control .next_btn:hover,
+.nav_control .close_btn:hover{
+background-color:#009944;
+-webkit-transition-property: background;
+  -webkit-transition-duration:0.5s;
+  -webkit-transition-timing-function: ease-out;
+  -moz-transition-property: background;
+  -moz-transition-duration: 0.5s;
+  -moz-transition-timing-function: ease-out;
+  -o-transition-property: background;
+  -o-transition-duration: 0.5s;
+  -o-transition-timing-function: ease-out;
+  -ms-transition-property: background;
+  -ms-transition-duration: 0.5s;
+  -ms-transition-timing-function: ease-out;
+  transition-property: background;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-out;
+  cursor:pointer;
+}
+
+ul.models_details{
+list-style:none;
+}
+
+ul.models_details li{
+color:#000;
+padding-bottom:15px;
+}

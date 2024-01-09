@@ -1,0 +1,28 @@
+/*Background Color */
+.menu ul li a.active,
+.menu ul li a:hover,
+ul#slide-list li.current-slide a, 
+ul#slide-list li.current-slide a:hover,
+#slide-list li a:hover,
+.prev:hover,
+.next:hover,
+span.roll,
+#contact-form p input#submit:hover,
+.tabs a.active,
+span.close_btn:hover,
+a.prevBtn:hover, 
+a.nextBtn:hover {
+	background-color:#009944 !important;
+}
+
+/*Border */
+.tabs a.active:after{
+border-top:7px solid #009944 !important;
+}
+
+
+
+/*Color */
+#slidecaption span{
+color:#009944 !important;
+}
