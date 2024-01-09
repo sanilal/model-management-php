@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<url>
+  <loc>http://flcmodels.com/</loc>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/index.php</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/aboutus.php</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/work.php?cat_id=1</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/work.php?cat_id=2</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/work.php?cat_id=3</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/work.php?cat_id=4</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/work.php?cat_id=5</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/work.php?cat_id=6</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/work.php?cat_id=9</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/register.php</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/men.php</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/women.php</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/cast.php</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/teens.php</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/kids.php</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/stylist.php</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/photographer.php</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://flcmodels.com/contact.php</loc>
+  <priority>0.80</priority>
+</url>
+
+
+</urlset>
