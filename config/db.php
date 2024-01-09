@@ -13,11 +13,11 @@
 define("DB_HOST", "p:localhost");
 
 /** name of the database. please note: database and database table are not the same thing! */
-define("DB_NAME", "flcmodels_com");
+define("DB_NAME", "models_com");
 
 /** user for your database. the user needs to have rights for SELECT, UPDATE, DELETE and INSERT.
 /** By the way, it's bad style to use "root", but for development it will work */
-define("DB_USER", "flcmodels_com");
+define("DB_USER", "models_com");
 
 /** The password of the above user */
 define("DB_PASS", "KXwEax4iNew");

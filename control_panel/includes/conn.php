@@ -1,6 +1,6 @@
 <?php
 //mysqli::close (  );
- $url = mysqli_connect("p:localhost","flcmodels_com","KXwEax4iNew","flcmodels_com")  or die("Connection failed".mysqli_connect_error());
+ $url = mysqli_connect("p:localhost","models_com","KXwEakljkjkNew","models_com")  or die("Connection failed".mysqli_connect_error());
  define('TB_pre','');
  define("image_path", "../FLC_Resource_Image_Folders/");
  

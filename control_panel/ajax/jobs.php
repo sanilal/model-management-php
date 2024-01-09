@@ -99,9 +99,9 @@ $columns = array(
  
 // SQL server connection information
 $sql_details = array(
-    'user' => 'flcmodels_com',
+    'user' => 'models_com',
     'pass' => 'KXwEax4iNew',
-    'db'   => 'flcmodels_com',
+    'db'   => 'models_com',
     'host' => 'localhost'
 );
  
