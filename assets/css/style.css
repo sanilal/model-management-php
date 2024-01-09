@@ -1,0 +1,574 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*@import url('https://fonts.googleapis.com/css?family=Titillium+Web:200,300,400,600,700');*/
+@import url('https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700');
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,400,400i,700');
+html, body {
+font-family: 'Raleway', sans-serif !important;
+margin: 0 !important;
+padding: 0 !important;
+}
+
+
+
+/*General*/
+h2 {
+	width: 100%;
+	text-align: center;
+	text-transform: uppercase;
+	border: 1px solid #EBEBEB;
+	border-left: none;
+	border-right: none;
+	color: #000;
+	margin-bottom: 30px;
+    font-weight: 100;
+    line-height: 45px;
+}
+.mt50 {
+	margin-top: 50px;
+}
+.mb50 {
+	margin-bottom: 50px;
+}
+.mtb50 {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.mt25 {
+	margin-top: 25px;
+}
+.mb25 {
+	margin-bottom: 25px;
+}
+.mtb25 {
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+.wo-margin {
+     margin-right: 0px; 
+     margin-left: 0px; 
+}
+.outerWraper {
+	width: 85%;
+	height: auto;
+	margin: auto;
+}
+header.header {
+	margin-top: 10px;
+}
+
+.tpLink  {
+	float: left;
+	margin-right: 10px;
+}
+
+.tpLink a i {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	background: #000;
+	color: #fff;
+	text-align: center;
+	padding-top:9px;
+}
+.tpLink a:hover i {
+	background: #bdbdbd;
+	color: #fff;
+}
+.tpLink a span {
+	color: #000;
+	font-size: 15px;
+	text-transform: uppercase;
+}
+.tpLink a:hover {
+	text-decoration: none;
+	color: #bdbdbd;
+}
+.logo {
+	width: 250px;
+	margin: auto;
+}
+.logo img {
+	display: block;
+	width: 131px;
+	height: auto;
+	margin: auto;
+}
+.logo-caption {
+	text-align: center;
+	color: #000;
+}
+.social li {
+	float: left;
+	list-style: none;
+	margin-right: 10px;
+}
+.social li:last-child {
+	margin-right: 0;
+}
+.social li a i {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	background: #000;
+	color: #fff;
+	text-align: center;
+	padding-top:9px;
+}
+.social li a i:hover {
+	background: #bdbdbd;
+	color: #fff;
+}
+nav.mainNav {
+    margin-top: 25px;
+    border: 1px solid #EBEBEB;
+    border-left: none;
+    border-right: none;
+	width: 100%;
+
+}
+ul.flc_menu {
+	text-align: center;
+	list-style: none;
+	margin-bottom: 0;
+}
+ul.flc_menu li {
+	display: inline-block;
+	width: auto;
+}
+ul.flc_menu li a {
+	padding: 0px 20px 0px 20px;
+    line-height: 45px;
+    font-size: 18px;
+    text-transform: uppercase;
+	color: #000;
+}
+ul.flc_menu li a:hover {
+	text-decoration: none;
+}
+.slider {
+	margin-top: 25px;
+}
+div#rev_slider_1068_1_wrapper {
+    width: 100% !important;
+    margin: auto !important;
+    left: 0 !important;
+}
+
+.featured-models {
+	margin-top: 50px;
+}
+/*Carousel*/
+
+* { box-sizing: border-box; }
+
+body { font-family: sans-serif; }
+
+.carousel {
+  background: #fff;
+}
+
+.carousel-cell {
+  width: 18%;
+  mmin-height: 400px;
+  margin-right: 10px;
+
+}
+.model-name {
+    position: relative;
+    top: -60px;
+    width: 100%;
+    background: rgba(0, 0, 0, .3);
+	text-align:center;
+    /* height: 60px; */
+    
+}
+.model-name  a {
+	font-size: 22px;
+	text-align: center;
+    line-height: 60px;
+    color: #fff;
+}
+.model-name  a:hover {
+	text-decoration: none;
+}
+/* cell number */
+.carousel-cell:before {
+  display: block;
+}
+
+.duo__cell {
+    float: left;
+    width: 100%;
+}
+section.row.aboutSection {
+    margin-top: 75px;
+}
+.aboutSection p {
+	    font-size: 20px;
+    line-height: 30px;
+	text-align: left;
+}
+.aboutSection p.lead {
+    font-size: 30px;
+    font-weight: 100;
+    line-height: 45px;
+	text-align: left;
+}
+.becomeModel {
+    display: block;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    padding: 25px;
+}
+.becomeModel h3 {
+	font-weight: 100;
+	text-align: left;
+	font-size:36px;
+}
+.becomeModel p.lead {
+    font-size: 22px;
+    font-weight: 100;
+    line-height: 35px;
+}
+.becomeModel button {
+    background: #094;
+    border: none;
+    display: block;
+    margin: auto;
+    font-size: 17px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.footerWraper {
+	width:100%;
+}
+.newsletter {
+	width: 100%;
+	float: left;
+}
+.footer-logo {
+	width: 131px;
+	margin:auto;
+}
+.newsletter h3 {
+	text-align: center;
+	color: #000;
+	text-transform: uppercase;
+	font-weight: 200;
+}
+.greenBrdr {
+	width: 50px;
+	height: 3px;
+	background: #009944;
+	margin: 15px auto;
+}
+.whiteBrdr {
+	width: 50px;
+	height: 3px;
+	background: #fff;
+	margin: 15px auto;
+}
+form#newsletterForm {
+	midth: 100%;
+	max-width: 500px;
+	margin: auto;
+	position: relative;
+}
+form#newsletterForm input[type="email"] {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #7b7b7b;
+    padding: 7px 15px;
+    border-radius: 10px;
+	float: left;
+	height: 40px;
+}
+form#newsletterForm input[type="submit"] {
+    width: 100px;
+    display: block;
+    /* margin: 15px auto; */
+    padding: 5px 0;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius:10px;
+    right: 0;
+    position: absolute;
+    top: 0;
+    background: #094;
+    color: #fff;
+    border: none;
+    outline: none;
+    height: 40px;
+}
+footer.footer {
+	width: 100%;
+    background: #000;
+    border-top: 1px solid rgba(138, 138, 138, .5);
+    padding: 50px 0 25px 0;
+}
+.footer p, .footer a {
+	color: #fff;
+}
+.footer_social_icons a i {
+    background-color: #333333;
+    text-align: center;
+    padding: 5px 7px;
+    color: #ffffff;
+    margin-right: 5px;
+    font-size: 16px;
+    border-radius: 3px;
+}
+.footer_social_icons a i:hover {
+	background: #009944;
+}
+
+
+/*.footer-sec.footerNav {
+	width: 27%;
+}*/
+ul.footer-link  {
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 0px;
+	margin-right: 18px;
+	float: left;
+}
+.footer-link li {
+	list-style: none;
+}
+.footer-link li a {
+	margin-bottom: 0px;
+    font-size: 15px;
+    font-weight: normal;
+    letter-spacing: 0px;
+    font-style: normal;
+    text-align: left;
+    color: #fff;
+}
+.footer h3 {
+	letter-spacing: 0px;
+    margin-bottom: 15px;
+    font-weight: normal;
+    font-style: normal;
+    text-align: left;
+    color: #ffffff;
+	font-size: 20px;
+}
+.footer address {
+	font-size: 15px;
+    font-weight: normal;
+    letter-spacing: 0px;
+    font-style: normal;
+    text-align: left;
+    color: #fff;
+	line-height: 35px;
+}
+.footer address i {
+	width: 30px;
+	color: #fff;
+	font-size: 17px;
+}
+.aboutSection h3 {
+    line-height: 40px;
+}
+.aboutSection p {
+    line-height: 30px;
+    font-size: 18px;
+    padding: 15px 0;
+}
+.copyright {
+    width: 100%;
+    height: 45px;
+    background: #e0e0e0;
+    text-align: center;
+    font-size: 13px;
+    padding-top: 15px;
+}
+.copyright a {
+	color: #000;
+}
+
+/*Models Page*/
+
+/*filter*/
+.filter, .filters {
+	width: 100%;
+}
+.filters {
+	display: none;
+}
+.filters.active {
+	display: block;
+}
+.filters-button {
+    width: 107px;
+    background: #000;
+    color: #fff;
+    padding: 4px 12px;
+	margin-bottom: 20px;
+	cursor:pointer;
+}
+.filters-button i {
+	margin-left: 3px;
+}
+.filters-button.active .fa-plus:before {
+	content: "\f068" !important;
+}
+.sorting {
+    float: right;
+    margin-top: -25px;
+}
+.sorting  select {
+	height: 30px;
+}
+label.chkcontainer {
+	width:50%;
+}
+.chkcontainer {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	float: left;
+}
+
+/* Hide the browser's default checkbox */
+.chkcontainer input {
+    position: absolute;
+    opacity: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.chkcontainer:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.chkcontainer input:checked ~ .checkmark {
+    background-color: #009944;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.chkcontainer input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.chkcontainer .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.model-filter label {
+	font-size: 13px;
+}
+.filterlabel {
+	font-size: 13px;
+	width: 100%;
+	display: block;
+	padding-bottom: 12px;
+}
+.model-filter input, .model-filter select {
+	width: 100%;
+	height: 30px;
+}
+
+/*filter ends*/
+
+/*Models Page Ends*/
+
+
+/*single model*/
+
+.model-parameters {
+    padding: 15px 20px;
+    background: #094;
+    display: block;
+    float: left;
+}
+.model-parameters h1 {
+	text-align: center;
+	color: #fff;
+	font-weight:200;
+}
+ .model-parameters ul li {
+    color: #ffffff;
+    padding: 5px 1.8%;
+    display: inline-block;
+	text-align: center;
+}
+ .model-parameters ul {
+    text-align: center;
+    list-style: none;
+    margin-bottom: 0;
+	    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 0px;
+}
+ .model-parameters ul li span.number {
+	font-family: 'Titillium Web', sans-serif ;
+ }
+ .modelGallery img {
+ 	max-width:170px;
+	height: auto;
+	padding: 0 5px 10px 5px;
+	cursor: pointer;
+ }
+.shortlist {
+    width: 100%;
+    text-align: center;
+    margin: 20px 0 10px;
+}
+ 
+ .shortlist a {
+    color: #094;
+    text-align: center;
+    background: #fff;
+    padding: 10px 15px;
+}
+  .shortlist a:hover {
+  	text-decoration: none;
+  }
+  div#html5-watermark {
+  	display: none !important;
+  }
