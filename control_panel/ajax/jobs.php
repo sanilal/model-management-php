@@ -75,7 +75,8 @@ $columns = array(
 			  $en_url=base64_encode("job_id=".$row['job_id']);
 					return '<a href="http://flcmodels.com/view_job/?q='.$en_url.'" target="_blank">View Link</a>
 					<br/>
-					<a href="http://flcmodels.com/view_job/print.php?q='.$en_url.'" class="btn btn-warning" target="_blank">Save Page</a>
+					<a href="http://flcmodels.com/view_job/print.php?q='.$en_url.'" class="btn btn-warning" target="_blank">Save Page</a><br/>
+					<a href="http://flcmodels.com/view-confirmed/?q='.$en_url.'" class="btn btn-success" target="_blank">View Confirmed</a>
 					';
 				}
 	 ),	

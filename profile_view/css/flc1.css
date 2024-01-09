@@ -1,0 +1,37 @@
+@charset "utf-8";
+body{ font-family:'Open Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif; margin:0; background:#FFF !important; font-size:13px; line-height:1; text-transform:uppercase}
+table tr{ vertical-align:top}
+.bodyfont {
+	font-family:'Open Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	/*font-size: 12px;*/
+	line-height: 18px;
+	font-weight: normal;
+	color: #2B2B2B;
+	text-decoration: none;
+}
+.title-grey {
+	font-family: 'Open Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size:18px;
+	font-weight: normal;
+	color: #666;
+	text-decoration: none;
+}
+.title-red {
+	font-family: 'Open Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size:18px;
+	font-weight: normal;
+	color: #E7040D;
+	text-decoration: none;
+}
+ .left_main_menu{ margin:0; padding:0; font-family:'Open Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif}
+ .left_main_menu li{ list-style-type:none}
+ .left_main_menu li a{ font-family:'Open Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:14px; text-decoration:none; line-height:26px; font-weight:400}
+ .left_main_menu > li > a { color:#FFF; /*font-weight:bold*/}
+ .left_main_menu > li > a:hover{ color:#999}
+ .left_main_menu ul li a{ color:#666666;}
+ .left_main_menu ul{ padding-left:20px}
+.eth_div{ float:left; min-width:130px; font-family:'Open Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif; /*font-size:12px;*/ color:#666666}
+a.iconcept_a{ color:#999; text-decoration:none}
+a.iconcept_a:hover{ color:#FFF}
+.shopping-cart:hover{ color:#999}
+.about_ul li{ text-transform:none}

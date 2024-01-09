@@ -8,10 +8,10 @@ require_once("../control_panel/includes/conn.php");
 //var_dump($_GET['q']);
 $submit=0;
 if(isset($_POST['job_id'])){
-	$model=$_POST['model_id'];
-	$job_d=$_POST['job_id'];
+	$model=mysqli_real_escape_string($url,$_POST['model_id']);
+	$job_d=mysqli_real_escape_string($url,$_POST['job_id']);
 	if(isset($_POST['agree'])){
-	$query = "UPDATE `Smart_FLC_job_assign` SET `job_agree_status`='".$_POST['agree']."' WHERE `job_id`=".$job_d." && `model_id`='".$model."'";
+	$query = "UPDATE `Smart_FLC_job_assign` SET `job_agree_status`='".mysqli_real_escape_string($url,$_POST['agree'])."' WHERE `job_id`='".$job_d."' && `model_id`='".$model."'";
 	//echo $query;
 	if(mysqli_query($url,$query)){
 		$submit=1;
@@ -19,7 +19,7 @@ if(isset($_POST['job_id'])){
 	}
 	//var_dump($submit);
 	//exit;
-	$to_email=mysqli_fetch_object(mysqli_query($url,"SELECT user_email FROM `lcfd_users_login` WHERE user_id=".$_POST['booker']));
+	$to_email=mysqli_fetch_object(mysqli_query($url,"SELECT user_email FROM `fdl_bookers_gin` WHERE user_id='".mysqli_real_escape_string($url,$_POST['booker'])."'"));
 		$to=$to_email->user_email;
 		//var_dump($to);
 		//$to="smtp@flcmodels.com";
@@ -126,8 +126,8 @@ if($job_id!="" && $model_id!=""){
 
  <?php 
 // echo "select * from `Smart_FLC_jobs` WHERE `job_id`='".$job_id."'";
-  $job=mysqli_fetch_object(mysqli_query($url,"select * from `Smart_FLC_jobs` WHERE `job_id`='".$job_id."'"));
- $model_res=mysqli_fetch_object(mysqli_query($url,"select * from `Smart_FLC_Resource_Details` WHERE Resource_ID='".$model_id."'"));
+  $job=mysqli_fetch_object(mysqli_query($url,"select * from `Smart_FLC_jobs` WHERE `job_id`='".mysqli_real_escape_string($url,$job_id)."'"));
+ $model_res=mysqli_fetch_object(mysqli_query($url,"select * from `Smart_FLC_Resource_Details` WHERE Resource_ID='".mysqli_real_escape_string($url,$model_id)."'"));
   //var_dump($job);
   ?>
 
@@ -177,10 +177,10 @@ if($job_id!="" && $model_id!=""){
                          <td><b>Location:</b>  <?php echo $job->job_location;  ?></td>
                          <td><b>Hours/Timings:</b>  </td>
                      </tr>
-                     <?php $booker_name=mysqli_fetch_object(mysqli_query($url,"SELECT user_name FROM `lcfd_users_login` WHERE user_id=".$job->job_created_by)); ?>
+                     <?php $booker_name=mysqli_fetch_object(mysqli_query($url,"SELECT user_name FROM `fdl_bookers_gin` WHERE user_id='".$job->job_created_by."'")); ?>
                      <tr>
                          <td><b>Contact Person:</b>  <?php echo $booker_name->user_name; ?> </td>
-                          <?php $agree_check=mysqli_fetch_object(mysqli_query($url,"SELECT job_agree_status,budget FROM `Smart_FLC_job_assign` WHERE model_id='".$model_id."' && job_id=".$job_id)); //var_dump($agree_check); ?>
+                          <?php $agree_check=mysqli_fetch_object(mysqli_query($url,"SELECT job_agree_status,budget FROM `Smart_FLC_job_assign` WHERE model_id='".mysqli_real_escape_string($url,$model_id)."' && job_id='".mysqli_real_escape_string($url,$job_id)."'")); //var_dump($agree_check); ?>
                          <td><b>Budget:</b><?php echo $agree_check->budget; ?> </td>
                      </tr>
                      <tr>

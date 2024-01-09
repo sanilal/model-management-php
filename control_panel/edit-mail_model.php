@@ -1,4 +1,8 @@
-<?php $active="model"; ?>
+<?php
+error_reporting(0);
+ob_start();
+session_start();
+ $active="model"; ?>
 <?php include_once('includes/header.php'); ?>
 
  <!-- Left side column. contains the sidebar -->
@@ -40,12 +44,16 @@ include("includes/conn.php");
 			//$cnt=1;
     		
 			$cur_date=date("Y-m-d H:i:s");
+			$new_sub_cat="";
+			if(isset($_POST['new_sub_cats'])){
+				$new_sub_cat=implode(",",$_POST['new_sub_cats']);
+			}	
 			 //$last_model=mysqli_fetch_object(mysqli_query($url,"select Resource_ID from `Smart_FLC_Resource_Details` ORDER BY Resource_ID DESC LIMIT 1"));
 			 //echo $last_model->Resource_ID."<br/>";
 			// $res_id=ltrim($last_model->Resource_ID,'F')+1; 
 			 //$res_id='F'.$res_id;
 			 //var_dump($_POST['gallery']); exit;
-			$query = "UPDATE `Smart_FLC_mail_Details` SET `First_Name`='".$_POST["fname"]."', `Resource_Type`='".implode(",",$_POST['category'])."', `Gender`='".$_POST['gender']."', `Ethnicity`='".implode(",",$_POST['ethnicity'])."', `Height`='".$_POST["height"]."', `Bust`='".$_POST["bust"]."', `Waist`='".$_POST['waist']."', `Hips`='".$_POST["hips"]."', `HairColor`='".$_POST['hair']."', `SkinColor`='".$_POST["skin"]."', `ShoesSize`='".$_POST["shoe"]."', `EyesColor`='".$_POST['eyes']."', `Native_Language`='".$_POST["mlang"]."', `Languages_Spoken`='".$_POST["olang"]."',  `Last_Name`='".$_POST["lname"]."', `Cell_phone`='".$_POST['phone']."', `Email1`='".$_POST["email"]."', `Address`='".$_POST["address"]."', `Nationality`='".$_POST['country']."', `DOB`='".date('Y-m-d', strtotime($_POST['dob']))."', `DressSize`='".implode(",",$_POST['dress'])."', `Weight`='".$_POST['weight']."', `Modified_By`='".$_SESSION['user_id']."', `Date_Modified`='$cur_date', `publish_photo`='".$_POST['publish_photo']."', images='".implode(",",$_POST['gallery'])."', `whatsapp`='".$_POST['whatsapp']."',`In_Town_Status`='".$_POST['in_town_st']."', `Age`='".$_POST['age']."',Sub_Category='".$sub_cat."' WHERE `Mailer_ID`='$id' ";
+			$query = "UPDATE `Smart_FLC_mail_Details` SET `First_Name`='".$_POST["fname"]."', `Resource_Type`='".implode(",",$_POST['category'])."', `Gender`='".$_POST['gender']."', `Ethnicity`='".implode(",",$_POST['ethnicity'])."', `Height`='".$_POST["height"]."', `Bust`='".$_POST["bust"]."', `Waist`='".$_POST['waist']."', `Hips`='".$_POST["hips"]."', `HairColor`='".$_POST['hair']."', `SkinColor`='".$_POST["skin"]."', `ShoesSize`='".$_POST["shoe"]."', `EyesColor`='".$_POST['eyes']."', `Native_Language`='".$_POST["mlang"]."', `Languages_Spoken`='".$_POST["olang"]."',  `Last_Name`='".$_POST["lname"]."', `Cell_phone`='".$_POST['phone']."', `Email1`='".$_POST["email"]."', `Address`='".$_POST["address"]."', `Nationality`='".$_POST['country']."', `DOB`='".date('Y-m-d', strtotime($_POST['dob']))."', `DressSize`='".implode(",",$_POST['dress'])."', `Weight`='".$_POST['weight']."', `Modified_By`='".$_SESSION['user_id']."', `Date_Modified`='$cur_date', `publish_photo`='".$_POST['publish_photo']."', images='".implode(",",$_POST['gallery'])."', `whatsapp`='".$_POST['whatsapp']."',`In_Town_Status`='".$_POST['in_town_st']."', `Age`='".$_POST['age']."',Sub_Category='".$sub_cat."', `new_sub_cats`='".$new_sub_cat."' WHERE `Mailer_ID`='$id' ";
 			
 			//echo $query; exit;
 			$r = mysqli_query($url, $query) or die(mysqli_error($url));
@@ -53,7 +61,7 @@ include("includes/conn.php");
 				
 				if(isset($_POST['add_to_model'])){
 					if($_POST['add_to_model']=="true"){
-						mysqli_query($url,"UPDATE `Smart_FLC_mail_Details` SET `added_status`='Added to Models' WHERE `Mailer_ID`='$id'");
+						
 						$num=mysqli_num_rows(mysqli_query($url,"SELECT `First_Name` FROM `Smart_FLC_Resource_Details` WHERE `First_Name`='".$_POST["fname"]."' && `Email1`='".$_POST["email"]."' "));
 						if($num < 1){
 						$last_model=mysqli_fetch_object(mysqli_query($url,"select Resource_ID from `Smart_FLC_Resource_Details` ORDER BY CAST(SUBSTR(`Resource_ID`,INSTR(`Resource_ID`, 'F') + 1) AS UNSIGNED) DESC LIMIT 1"));
@@ -74,14 +82,15 @@ include("includes/conn.php");
 						 	copy('../'.$filename, image_path.$sub_folder.'/'.$res_id.'_'.$count.'.jpg');
 							$cnt++;
 						}
-						$query = "INSERT INTO `Smart_FLC_Resource_Details` (`Resource_ID`,`First_Name`, `Resource_Type`, `Gender`, `Ethnicity`, `Height`, `Bust`, `Waist`, `Hips`, `HairColor`, `SkinColor`, `ShoesSize`, `EyesColor`, `Native_Language`, `Languages_Spoken`, `Date_Created`, `Last_Name`, `Cell_phone`, `Email1`, `Address`, `Nationality`, `DOB`, `DressSize`, `Weight`, `Created_By`,`whatsapp`, `In_Town_Status`, `Age`, `Sub_Category`) VALUES('".$res_id."', '".$_POST["fname"]."', '".implode(",",$_POST['category'])."', '".$_POST['gender']."', '".implode(",",$_POST['ethnicity'])."', '".$_POST["height"]."', '".$_POST["bust"]."', '".$_POST['waist']."', '".$_POST["hips"]."', '".$_POST['hair']."', '".$_POST["skin"]."', '".$_POST["shoe"]."', '".$_POST['eyes']."', '".$_POST["mlang"]."', '".implode(",",$_POST["olang"])."', '".$cur_date."', '".$_POST["lname"]."', '".$_POST['phone']."', '".$_POST["email"]."', '".$_POST["address"]."', '".$_POST['country']."', '".date('Y-m-d', strtotime($_POST['dob']))."', '".implode(",",$_POST['dress'])."', '".$_POST['weight']."', '".$_SESSION['user_id']."', '".$_POST['whatsapp']."', '".$_POST['in_town_st']."', '".$_POST['age']."', '".$sub_cat."' )";
+						$query = "INSERT INTO `Smart_FLC_Resource_Details` (`Resource_ID`,`First_Name`, `Resource_Type`, `Gender`, `Ethnicity`, `Height`, `Bust`, `Waist`, `Hips`, `HairColor`, `SkinColor`, `ShoesSize`, `EyesColor`, `Native_Language`, `Languages_Spoken`, `Date_Created`, `Last_Name`, `Cell_phone`, `Email1`, `Address`, `Nationality`, `DOB`, `DressSize`, `Weight`, `Created_By`,`whatsapp`, `In_Town_Status`, `Age`, `Sub_Category`, `from`) VALUES('".$res_id."', '".$_POST["fname"]."', '".implode(",",$_POST['category'])."', '".$_POST['gender']."', '".implode(",",$_POST['ethnicity'])."', '".$_POST["height"]."', '".$_POST["bust"]."', '".$_POST['waist']."', '".$_POST["hips"]."', '".$_POST['hair']."', '".$_POST["skin"]."', '".$_POST["shoe"]."', '".$_POST['eyes']."', '".$_POST["mlang"]."', '".implode(",",$_POST["olang"])."', '".$cur_date."', '".$_POST["lname"]."', '".$_POST['phone']."', '".$_POST["email"]."', '".$_POST["address"]."', '".$_POST['country']."', '".date('Y-m-d', strtotime($_POST['dob']))."', '".implode(",",$_POST['dress'])."', '".$_POST['weight']."', '".$_SESSION['user_id']."', '".$_POST['whatsapp']."', '".$_POST['in_town_st']."', '".$_POST['age']."', '".$sub_cat."', 'request' )";
 						//var_dump($query); 
 						$success=mysqli_query($url, $query) or die(mysqli_error($url));
 						if($success){
-							foreach($all_imgs as $filename){
+							mysqli_query($url,"UPDATE `Smart_FLC_mail_Details` SET `added_status`='Added to Models' WHERE `Mailer_ID`='$id'");
+							/*foreach($all_imgs as $filename){
 								unlink('../'.$filename);
 							}
-							mysqli_query($url,"DELETE FROM `Smart_FLC_mail_Details` WHERE `Mailer_ID`='$id'");
+							mysqli_query($url,"DELETE FROM `Smart_FLC_mail_Details` WHERE `Mailer_ID`='$id'");*/
 						}
 					}
 					else{
@@ -330,11 +339,42 @@ $dress_arr=array("Extra Small","Small","Medium","Large","Extra Large");
 				$model_cats=explode(",",$model->Resource_Type);
 				 foreach($cat_arr as $cat_val){ ?>
                   <label class="col-sm-6">
-                        <input value="<?php echo $cat_val; ?>" name="category[]" type="checkbox" class="foi_check" <?php if(in_array($cat_val,$model_cats)){ echo 'checked="checked"';} ?>><?php echo $cat_val; ?>
+                        <input value="<?php echo $cat_val; ?>" name="category[]" type="checkbox" class="foi_check category_check" <?php if(in_array($cat_val,$model_cats)){ echo 'checked="checked"';} ?>><?php echo $cat_val; ?>
                     </label>
                  <?php } ?>
                 </div>
               </div>
+              
+              <div class="form-group" <?php if (!array_intersect(array("Photographer","Stylist"), $model_cats)) { echo 'style="display:none"'; } ?> >
+                <label for="inputCat" class="col-sm-4 control-label">Sub Category</label>
+                <div class="col-sm-8">
+                <div id="stylist-subs" <?php if (in_array("Stylist", $model_cats)) { echo 'style="display:block"'; } ?> class="sub_cats">
+                <?php
+				$sub_cat_arr=array("Food", "Hair", "Make-up", "Hair & Make-up", "Prop stylist", "Prosthetic Stylist", "Wardrobe", "Others", "Out of Town");
+				$model_sub_cats=explode(",",$model->new_sub_cats);
+				 foreach($sub_cat_arr as $sub_cat){ ?>
+                  <label class="col-sm-6">
+                        <input value="<?php echo $sub_cat; ?>" name="<?php if (in_array("Stylist", $model_cats)) { echo 'new_sub_cats'; } ?>" type="checkbox" class="foi_check" <?php if(in_array($sub_cat, $model_sub_cats)){ echo 'checked="checked"';} ?>><?php echo $sub_cat; ?>
+                    </label>
+                 <?php } ?>
+                 </div>
+                 <div  id="photogr-subs" <?php if (in_array("Photographer", $model_cats)) { echo 'style="display:block"'; } ?> class="sub_cats">
+                 <?php
+				$sub_cat_arr=array("International", "Advertising Beauty", "Editorial", "Fashion", "Hair", "Jewellery", "Lifestyle", "Food", "Product/ Still Life", "Aerial", "Hotel", "Interior/ Architecture", "Landscape", "Children", "Wedding", "Car", "Out of Town", "Under Water Photography");
+				
+				$model_sub_cats=explode(",",$model->new_sub_cats);
+				 foreach($sub_cat_arr as $sub_cat){ ?>
+                  <label class="col-sm-6">
+                        <input value="<?php echo $sub_cat; ?>" name="<?php if (in_array("Photographer", $model_cats)) { echo 'new_sub_cats'; } ?>" type="checkbox" class="foi_check" <?php if(in_array($sub_cat, $model_sub_cats)){ echo 'checked="checked"';} ?>><?php echo $sub_cat; ?>
+                    </label>
+                 <?php }  ?>
+                </div>
+                 
+                </div>
+                 
+              </div>
+
+              
               <div class="form-group">
                 <label for="inputEth" class="col-sm-4 control-label">Ethnicity</label>
                 <div class="col-sm-8">
@@ -532,10 +572,9 @@ $dress_arr=array("Extra Small","Small","Medium","Large","Extra Large");
                   <button type="submit" class="btn btn-primary" style="padding-left:30px; padding-right:30px; font-size:16px" id="update_button">Update</button>
                   <?php if($model->added_status!="" && $model->added_status!=NULL){ ?>
                   <span class="label label-success "><?php echo $model->added_status; ?></span>
-                  <?PHP } else{ ?>
+                  <?PHP }  ?>
                   &nbsp;&nbsp;OR &nbsp;
                   <button type="submit" class="btn btn-primary" style="padding-left:30px;  font-size:16px" onClick="return add_to_model(this)">Add to models</button>
-                  <?php } ?>
                 </div>
               </div>
             </form>
@@ -696,6 +735,16 @@ $dress_arr=array("Extra Small","Small","Medium","Large","Extra Large");
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
   $( function() {
+	  $('.category_check').on('change', function() {
+			var val = this.checked ? this.value : '';
+			if(val=="Stylist"){ $("#stylist-subs").show();  $("#stylist-subs").parent().parent().show(); $("#stylist-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+			if(val=="Photographer"){ $("#photogr-subs").show();  $("#photogr-subs").parent().parent().show(); $("#photogr-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+			//
+			var un_val = !this.checked ? this.value : '';
+			if(un_val=="Stylist"){ $("#stylist-subs").hide();   $("#stylist-subs").find(".foi_check").attr('name','') }
+			if(un_val=="Photographer"){ $("#photogr-subs").hide();  $("#photogr-subs").find(".foi_check").attr('name','') }
+		});
+		
     $( "#sortable" ).sortable({
             refreshPositions: true,scroll:true,
             containment: 'parent'}).disableSelection();

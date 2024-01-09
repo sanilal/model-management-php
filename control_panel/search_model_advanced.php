@@ -61,6 +61,7 @@ include("includes/conn.php");
 hr{ margin:10px 0; clear:both;}
 #range_2,#range_1{ display:none}
 .opac_div{ opacity:0.5;filter:alpha(opacity=50); width:95%; margin-top:0; margin-left:40px; position:absolute; height:50px; background:#fff; z-index:10;}
+.sub_cats{ display:none;}
 </style>
  <?php 
   $models_query=mysqli_query($url,"select * from `Smart_FLC_Resource_Details` WHERE Resource_ID LIKE '%".$_GET['q_val']."%' OR CONCAT( First_Name,  ' ', Last_Name )  LIKE '%".$_GET['q_val']."%' LIMIT 50");
@@ -166,6 +167,39 @@ hr{ margin:10px 0; clear:both;}
                 <hr style="width:100%;"/>
               </div>
               
+               <div class="form-group" style="display:none" >
+                <label for="inputCat" class="col-sm-3 control-label">Sub Category</label>
+                <div class="col-sm-9">
+                <div id="stylist-subs" class="sub_cats">
+                <?php
+				$sub_cat_arr=array("Food", "Hair", "Make-up", "Hair & Make-up", "Prop stylist", "Prosthetic Stylist", "Wardrobe", "Others", "Out of Town");
+				
+				 foreach($sub_cat_arr as $sub_cat){ 
+				 
+				 ?>
+					 
+                  <label class="col-sm-4">
+                        <input value="<?php echo $sub_cat; ?>" name="" type="checkbox" class="foi_check" ><?php echo $sub_cat; ?>
+                    </label>
+                 <?php }  ?>
+                 </div>
+                 <div  id="photogr-subs" class="sub_cats">
+                 <?php
+				$sub_cat_arr=array("International", "Advertising Beauty", "Editorial", "Fashion", "Hair", "Jewellery", "Lifestyle", "Food", "Product/ Still Life", "Aerial", "Hotel", "Interior/ Architecture", "Landscape", "Children", "Wedding", "Car", "Out of Town", "Under Water Photography");
+				 
+				 foreach($sub_cat_arr as $sub_cat){ 
+				 ?>
+					 
+                  <label class="col-sm-4">
+                        <input value="<?php echo $sub_cat; ?>" name="" type="checkbox" class="foi_check" ><?php echo $sub_cat; ?>
+                    </label>
+                 <?php } ?>
+                </div>
+                 
+                </div>
+                 <hr style="width:100%;"/>
+              </div>
+              
                <div class="form-group">
                 <label for="inputEth" class="col-sm-3 control-label">Ethnicity</label>
                 <div class="col-sm-9">
@@ -193,6 +227,9 @@ hr{ margin:10px 0; clear:both;}
                 </div>
                 <hr style="width:100%"/>
               </div>
+              
+             
+              
                <div class="form-group">
                 <label for="inputGender" class="col-sm-3 control-label">Sex</label>
                 <div class="col-sm-9">
@@ -252,6 +289,7 @@ hr{ margin:10px 0; clear:both;}
                         <th>Category</th>
                         <th>Ethnicity</th>
                         <th style="background:#fff;">Action</th>
+                        <th>Sub_cat</th>
                       </tr>
                     </thead>
                    
@@ -359,7 +397,7 @@ hr{ margin:10px 0; clear:both;}
 		"order": [[ 0, "desc" ]],
 		"columnDefs": [
             {
-                "targets": [ 0,6,7,8,9 ,10],
+                "targets": [ 0,6,7,8,9 ,10,11],
                 "visible": false
             },
 			{
@@ -416,7 +454,19 @@ hr{ margin:10px 0; clear:both;}
 			  ).draw();*/
 			}
         });
-		
+		//
+		 $('.cat_check').on('change', function() {
+				var val = this.checked ? this.value : '';
+				if(val=="Stylist"){ $("#stylist-subs").show();  $("#stylist-subs").parent().parent().show(); $("#stylist-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+				if(val=="Photographer"){ $("#photogr-subs").show();  $("#photogr-subs").parent().parent().show(); $("#photogr-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+				//
+				var un_val = !this.checked ? this.value : '';
+				if(un_val=="Stylist"){ $("#stylist-subs").hide();   $("#stylist-subs").find(".foi_check").attr('name',''); 
+				$('#stylist-subs .foi_check').prop('checked', false); }
+				if(un_val=="Photographer"){ $("#photogr-subs").hide();  $("#photogr-subs").find(".foi_check").attr('name','');
+				$('#photogr-subs .foi_check').prop('checked', false); }
+			});
+			//
       });
 	  //
 	  
@@ -430,6 +480,11 @@ hr{ margin:10px 0; clear:both;}
 		  return $(this).val();
 		}).get(); 
 		console.log(ethnicity);
+		//
+		var sub_cat_val = $("input.foi_check:checkbox:checked").map(function(){
+		  return $(this).val();
+		}).get(); 
+		console.log(sub_cat_val);
 		//var ethnicity=$("#select_eth").val();
 		var gender=$("#inputGender").val();
 		var nationality=$("#inputCountry").val();
@@ -459,6 +514,7 @@ hr{ margin:10px 0; clear:both;}
 			.column(9).search(ethnicity, true, true)
 			.column(7).search(age_val,false, false)
 			.column(5).search(height_val,false, false)
+			.column(11).search(sub_cat_val, true, true)
 			.draw();	
 		
 			

@@ -1,6 +1,17 @@
-<?php $active="home"; ?>
+<?php
+error_reporting(0);
+ob_start();
+session_start();
 
-<?php include_once('includes/header.php'); ?>
+ $active="home"; ?>
+
+<?php include_once('includes/header.php');
+if($_SESSION['user_role']==2){
+	header("Location: dashboard.php");
+	echo "<script type='text/javascript'>window.top.location='dashboard.php';</script>";
+	exit;
+}
+ ?>
 
       <!-- =============================================== -->
 

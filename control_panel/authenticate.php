@@ -7,11 +7,14 @@ require_once("includes/conn.php");
 $msg = "";
 //var_dump(tb_pre); exit;
 //var_dump($_SESSION['user_name']); exit;
+$token_data = mysqli_fetch_object(mysqli_query($url,"SELECT * FROM `Smart_FLC_tokens` WHERE `token_id`='1'"));
+if($token_data->token_status==1){
 if(isset($_SESSION['user_name'])) {
 	if($_SESSION["logged"] == "true"){
 		//var_dump($_SESSION['user_name']); exit;
 	if(isset($_POST['token'])){
-		$query = "SELECT `token_val` FROM `Smart_FLC_tokens` WHERE `token_id`='1' AND `created` > NOW() - INTERVAL 12 HOUR";
+		
+		$query = "SELECT `token_val` FROM `Smart_FLC_tokens` WHERE `token_id`='1' AND `created` > NOW() - INTERVAL ".$token_data->valid_hours." HOUR";
 		$r = mysqli_fetch_object(mysqli_query($url, $query));
 		//var_dump($_POST['token']); exit;
 		if($r->token_val!=NULL){
@@ -110,4 +113,4 @@ else{
     
   </body>
 </html>
-<?php ob_end_flush(); ?>
+<?php } else{ header("location:home.php"); } ob_end_flush(); ?>

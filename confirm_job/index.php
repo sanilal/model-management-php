@@ -8,16 +8,16 @@ require_once("../control_panel/includes/conn.php");
 //var_dump($_GET['q']);
 $submit=0;
 if(isset($_POST['job_id'])){
-	$model=$_POST['model_id'];
-	$job_d=$_POST['job_id'];
-	$query = "UPDATE `Smart_FLC_job_assign` SET `job_assign_status`='".$_POST['status']."' WHERE `job_id`=".$job_d." && `model_id`='".$model."'";
+	$model=mysqli_real_escape_string($url,$_POST['model_id']);
+	$job_d=mysqli_real_escape_string($url,$_POST['job_id']);
+	$query = "UPDATE `Smart_FLC_job_assign` SET `job_assign_status`='".mysqli_real_escape_string($url,$_POST['status'])."' WHERE `job_id`='".$job_d."' && `model_id`='".$model."'";
 	//echo $query;
 	if(mysqli_query($url,$query)){
 		$submit=1;
 	}
 	//var_dump($submit);
 	//exit;
-	$to_email=mysqli_fetch_object(mysqli_query($url,"SELECT user_email FROM `lcfd_users_login` WHERE user_id=".$_POST['booker']));
+	$to_email=mysqli_fetch_object(mysqli_query($url,"SELECT user_email FROM `fdl_bookers_gin` WHERE user_id='".mysqli_real_escape_string($url,$_POST['booker'])."'"));
 		$to=$to_email->user_email;
 		//var_dump($to);
 		//$to="smtp@flcmodels.com";
@@ -119,7 +119,7 @@ if($job_id!="" && $model_id!=""){
 
  <?php 
 // echo "select * from `Smart_FLC_jobs` WHERE `job_id`='".$job_id."'";
-  $job=mysqli_fetch_object(mysqli_query($url,"select * from `Smart_FLC_jobs` WHERE `job_id`='".$job_id."'"));
+  $job=mysqli_fetch_object(mysqli_query($url,"select * from `Smart_FLC_jobs` WHERE `job_id`='".mysqli_real_escape_string($url,$job_id)."'"));
   //echo "select * from `Smart_FLC_Resource_Details` WHERE Resource_ID=".$_GET['r_id'];
   //var_dump($job);
   ?>
@@ -182,7 +182,7 @@ if($job_id!="" && $model_id!=""){
                 </div>
                  <div class="form-group">
                   <?php
-					$ja_query=mysqli_fetch_object(mysqli_query($url,"SELECT * FROM `Smart_FLC_job_assign` WHERE `model_id`='".$model_id."' && job_id=".$job_id));
+					$ja_query=mysqli_fetch_object(mysqli_query($url,"SELECT * FROM `Smart_FLC_job_assign` WHERE `model_id`='".mysqli_real_escape_string($url,$model_id)."' && job_id=".mysqli_real_escape_string($url,$job_id)));
 					?>
                 <label for="inputAddress" >Budget:</label>
                 

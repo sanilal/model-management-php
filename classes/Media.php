@@ -292,7 +292,8 @@ class Media {
 
 						$newname = $this->flc_clean($media_title).'_img.'.$ext;
 						//var_dump($newname); 
-						$upload=$this->img_upload('media_img',$newname);
+						//$upload=$this->img_upload('media_img',$newname);
+						$upload=true;
 						//var_dump($upload); exit();
 						if($upload){
 
@@ -312,8 +313,8 @@ class Media {
 
 						$newname = $this->flc_clean($media_title).'_img2.'.$ext;
 
-						$upload=$this->img_upload('media_img2',$newname);
-
+						//$upload=$this->img_upload('media_img2',$newname);
+						$upload=true;
 						if($upload){
 
 							$art_img2=$newname;
@@ -332,8 +333,8 @@ class Media {
 
 						$newname = $this->flc_clean($media_title).'_img3.'.$ext;
 
-						$upload=$this->img_upload('media_img3',$newname);
-
+						//$upload=$this->img_upload('media_img3',$newname);
+						$upload=true;
 						if($upload){
 
 							$art_img3=$newname;
@@ -352,7 +353,8 @@ class Media {
 
 						$newname = $this->flc_clean($media_title).'_img4.'.$ext;
 
-						$upload=$this->img_upload('media_img4',$newname);
+						//$upload=$this->img_upload('media_img4',$newname);
+						$upload=true;
 
 						if($upload){
 
@@ -372,7 +374,8 @@ class Media {
 
 						$newname = $this->flc_clean($media_title).'_img5.'.$ext;
 
-						$upload=$this->img_upload('media_img5',$newname);
+						//$upload=$this->img_upload('media_img5',$newname);
+						$upload=true;
 
 						if($upload){
 
@@ -392,7 +395,8 @@ class Media {
 
 						$newname = $this->flc_clean($media_title).'_img6.'.$ext;
 
-						$upload=$this->img_upload('media_img6',$newname);
+						//$upload=$this->img_upload('media_img6',$newname);
+						$upload=true;
 
 						if($upload){
 
@@ -412,7 +416,8 @@ class Media {
 
 						$newname = $this->flc_clean($media_title).'_img7.'.$ext;
 
-						$upload=$this->img_upload('media_img7',$newname);
+						//$upload=$this->img_upload('media_img7',$newname);
+						$upload=true;
 
 						if($upload){
 
@@ -432,7 +437,8 @@ class Media {
 
 						$newname = $this->flc_clean($media_title).'_img8.'.$ext;
 
-						$upload=$this->img_upload('media_img8',$newname);
+						//$upload=$this->img_upload('media_img8',$newname);
+						$upload=true;
 
 						if($upload){
 
@@ -452,7 +458,8 @@ class Media {
 
 						$newname = $this->flc_clean($media_title).'_img9.'.$ext;
 
-						$upload=$this->img_upload('media_img9',$newname);
+						//$upload=$this->img_upload('media_img9',$newname);
+						$upload=true;
 
 						if($upload){
 
@@ -472,7 +479,8 @@ class Media {
 
 						$newname = $this->flc_clean($media_title).'_img10.'.$ext;
 
-						$upload=$this->img_upload('media_img10',$newname);
+						//$upload=$this->img_upload('media_img10',$newname);
+						$upload=true;
 
 						if($upload){
 
@@ -606,7 +614,8 @@ class Media {
 					$ext = pathinfo($path, PATHINFO_EXTENSION);
 					$newname = $this->flc_clean($media_title).'_img.'.$ext;
 					//var_dump($newname);
-					$upload=$this->img_upload('media_img',$newname);
+					//$upload=$this->img_upload('media_img',$newname);
+					$upload=true;
 					//var_dump($upload); exit();
 					if($upload){
 
@@ -869,9 +878,9 @@ class Media {
 
 		// check that the file we are working on really was the subject of an HTTP upload 
 
-		@is_uploaded_file($_FILES[$fieldname]['tmp_name']) 
+		//@is_uploaded_file($_FILES[$fieldname]['tmp_name']) 
 
-			or die('not an HTTP upload'); 
+	//		or die('not an HTTP upload'); 
 
 			//echo 'not an HTTP upload';
 
@@ -881,9 +890,9 @@ class Media {
 
 		// getimagesize() returns false if the file tested is not an image. 
 
-		@getimagesize($_FILES[$fieldname]['tmp_name']) 
+		//@getimagesize($_FILES[$fieldname]['tmp_name']) 
 
-			or die ('only image uploads are allowed'); 
+		//	or die ('only image uploads are allowed'); 
 
 			//echo 'only image uploads are allowed';
 
@@ -899,13 +908,13 @@ class Media {
 
 		} */
 
-		$uploadFilename=$uploadsDirectory.$img_name;
+		//$uploadFilename=$uploadsDirectory.$img_name;
 
 		// now let's move the file to its final location and allocate the new filename to it 
 
-		@move_uploaded_file($_FILES[$fieldname]['tmp_name'], $uploadFilename)
+		//@move_uploaded_file($_FILES[$fieldname]['tmp_name'], $uploadFilename)
 
-			or die ('receiving directory insuffiecient permission'); 
+			//or die ('receiving directory insuffiecient permission'); 
 
 			//echo 'receiving directory insuffiecient permission';
 
@@ -1054,13 +1063,17 @@ class Media {
 
 				$id=$db_connection->real_escape_string($val);
 
-				$stmt = $db_connection->query("SELECT category_id, category_name FROM work_categories WHERE category_id=$id ");
+				$stmt = $db_connection->prepare("SELECT category_id, category_name FROM work_categories WHERE category_id=? ");
+				$stmt->bind_param('i', $id); // 's' specifies the variable type => 'string'
 
+				$stmt->execute();
+				
+				$result = $stmt->get_result();
 			}
 
 			else{
 
-				$stmt = $db_connection->query("SELECT category_id, category_name FROM work_categories ");
+				$result = $db_connection->query("SELECT category_id, category_name FROM work_categories ");
 
 			}
 
@@ -1072,7 +1085,7 @@ class Media {
 
 				//$mt=$stmt->num_rows;
 
-				return $stmt;
+				return $result;
 
 					/* close statement */
 

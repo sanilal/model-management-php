@@ -30,10 +30,11 @@ function get_fullName($val){
 }
 function get_Personal_Details($val){
 	global $url;
-	  $model=mysqli_fetch_object(mysqli_query($url,"select `Gender`, `DOB`,`Resource_Type`,In_Town_Status,`Sub_Category`, `Ethnicity`, `Nationality` from `Smart_FLC_Resource_Details` WHERE Resource_ID='".$val."'"));
+	  $model=mysqli_fetch_object(mysqli_query($url,"select `Gender`, `DOB`,`Resource_Type`,In_Town_Status,`Sub_Category`, `Ethnicity`, `Nationality`,`new_sub_cats` from `Smart_FLC_Resource_Details` WHERE Resource_ID='".$val."'"));
 	 $inter='<p>International Model/talent?:<b> No </b>';
 	 if(strpos($model->Sub_Category,"International")!== false){$inter='<p>International Model/talent?: <b>Yes </b>';}
-	  return '<p>Category: <b>'.$model->Resource_Type.'</b></p>
+	 if($model->new_sub_cats!=""){$sub_cats='<p>Sub Category: <b>'.$model->new_sub_cats.'</b></p>';}
+	  return '<p>Category: <b>'.$model->Resource_Type.'</b></p>'.$sub_cats.'
 	  <p>Ethnicity: <b>'.$model->Ethnicity.'</b></p>
 	  <p>Gender: <b>'.$model->Gender.'</b></p>
 	  <p>Age: <b>'.date_diff(date_create($model->DOB), date_create('today'))->y.'</b></p>
@@ -161,7 +162,8 @@ $columns = array(
     array('db' => 'Ethnicity', 'dt' => 9 ),
     array(
         'db'        => 'Address',
-        'dt'        => 10)
+        'dt'        => 10),
+	array('db' => 'new_sub_cats', 'dt' => 11 )
 );
  
 // SQL server connection information

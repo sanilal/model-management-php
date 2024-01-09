@@ -1,0 +1,14 @@
+/* Just for the example. Fee free to delete these three lines */
+
+@media print { 
+	/* your print styles go here */
+	
+
+	body { margin: 0;
+padding: 0;
+background:#FFF;
+font-family:'gothic' !important; height:100%;} 
+	h1 { float: left;
+	margin: 0px;
+	text-indent:8px; } 
+}

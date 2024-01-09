@@ -9,7 +9,29 @@ margin: 0 !important;
 padding: 0 !important;
 }
 
-
+h1.pagetitle {
+	margin-bottom: .5rem;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+	text-align: center;
+	font-size: 2rem !important;
+	margin-top: 0;
+	display: block;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.aboutSection p strong.leadtxt {
+    line-height: 30px;
+    font-size: 18px;
+    padding: 15px 0;
+    text-align: -webkit-auto;
+    font-weight: normal;
+    display: contents;
+}
 
 /*Header*/
 header.header {

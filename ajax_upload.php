@@ -3,11 +3,13 @@ ob_start();
 session_start();
 error_reporting(0);
 if (isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST") {
+
 	if(isset($_POST['filename'])){
 			
 			$extension=array("jpeg","jpg","png","gif");
 			
 			include_once("class.upload.php");
+			 
 			$gallery=array();
 			 $size = $_FILES['myfile']['size'];
     		if(!isset($_SESSION['img_count'])){
@@ -21,6 +23,7 @@ if (isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST") {
 				if ($size < 5348880) {
 				$img_src=image_upload($_FILES['myfile'],$_POST['filename']."img".time()."_".$i,500);
 				if($img_src!=""){
+				//var_dump($_SESSION['img_files']); exit;
 				$_SESSION['img_files'][]=$img_src;
 				
 				$_SESSION['img_count']++;
@@ -36,6 +39,7 @@ if (isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST") {
 			//var_dump($_SESSION['img_files']);
 	}
 	//
+	 
 	
 	if(isset($_POST['index'])){
 		$i=$_POST['index'];

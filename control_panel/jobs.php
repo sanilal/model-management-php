@@ -1,4 +1,8 @@
-<?php $active="job"; //echo phpinfo(); ?>
+<?php 
+error_reporting(0);
+ob_start();
+session_start();
+$active="job"; //echo phpinfo(); ?>
 <?php include_once('includes/header.php'); ?>
 
  <!-- Left side column. contains the sidebar -->
@@ -80,6 +84,9 @@ if(isset($_POST['job_id'])){
 		  </tr>
 		  <tr>
 			  <td colspan="2"><b>Location:</b><br/> '.$job_res->job_location.'</td>
+		  </tr>
+		  <tr>
+			  <td colspan="2"><b>Budget:</b><br/> '.$model->budget.'</td>
 		  </tr>
 		   <tr>
 			  <td colspan="2"><b>Notes:</b><br/> '.$cat_msgs[$model->model_cat].'</td>
@@ -186,6 +193,9 @@ if(isset($_POST['job_form_id'])){
 		  </tr>
 		  <tr>
 			  <td colspan="2"><b>Location:</b><br/> '.$job_res->job_location.'</td>
+		  </tr>
+		   <tr>
+			  <td colspan="2"><b>Budget:</b><br/> '.$model->budget.'</td>
 		  </tr>
 		  <tr>
 			  <td colspan="2"><b>Notes:</b><br/> '.$cat_msgs[$model->model_cat].'</td>

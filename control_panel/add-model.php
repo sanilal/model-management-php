@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 ob_start();
 session_start();
 ?>
@@ -13,6 +14,7 @@ session_start();
 .contenter a{ color:#E70310}
 .error_red{ border:1px solid #DF1518}
 .form-group label{ text-align:left !important;}
+.sub_cats{ display:none;}
 </style>
 
 
@@ -27,17 +29,20 @@ include("includes/conn.php");
 		$error="";
 		if($_POST['fname']!="" || $_POST['email']!="" || $_POST['phone']!="" || $_POST['dob']!="" || $_POST['gender']!="" || $_POST['country']!="" || $_POST['mlang']!=""  || $_POST['height']!=""  || $_POST['weight']!=""  ){			
 			
-			$sub_cat="";
+			$sub_cat=""; $new_sub_cat="";
 			if(isset($_POST['inter_status'])){
 				$sub_cat=$_POST['inter_status'];
 			}
+			if(isset($_POST['new_sub_cats'])){
+				$new_sub_cat=implode(",",$_POST['new_sub_cats']);
+			}	
 			
 			$cur_date=date("Y-m-d H:i:s");
 			 $last_model=mysqli_fetch_object(mysqli_query($url,"select Resource_ID from `Smart_FLC_Resource_Details` ORDER BY CAST(SUBSTR(`Resource_ID`,INSTR(`Resource_ID`, 'F') + 1) AS UNSIGNED) DESC LIMIT 1"));
 			 //echo $last_model->Resource_ID."<br/>";
 			 $res_id=ltrim($last_model->Resource_ID,'F')+1; 
 			 $res_id='F'.$res_id;
-			$query = "INSERT INTO `Smart_FLC_Resource_Details` (`Resource_ID`,`First_Name`, `Resource_Type`, `Gender`, `Ethnicity`, `Height`, `Bust`, `Waist`, `Hips`, `HairColor`, `SkinColor`, `ShoesSize`, `EyesColor`, `Native_Language`, `Languages_Spoken`, `Date_Created`, `Last_Name`, `Cell_phone`, `Email1`, `Address`, `Nationality`, `DOB`, `DressSize`, `Weight`, `Created_By`,`whatsapp`, `In_Town_Status`,`Age`, `Sub_Category`) VALUES('".$res_id."', '".$_POST["fname"]."', '".implode(",",$_POST['category'])."', '".$_POST['gender']."', '".implode(",",$_POST['ethnicity'])."', '".$_POST["height"]."', '".$_POST["bust"]."', '".$_POST['waist']."', '".$_POST["hips"]."', '".$_POST['hair']."', '".$_POST["skin"]."', '".$_POST["shoe"]."', '".$_POST['eyes']."', '".$_POST["mlang"]."', '".implode(",",$_POST["olang"])."', '".$cur_date."', '".$_POST["lname"]."', '".$_POST['phone_code'].$_POST['phone']."', '".$_POST["email"]."', '".$_POST["address"]."', '".$_POST['country']."', '".date('Y-m-d', strtotime($_POST['dob']))."', '".implode(",",$_POST['dress'])."', '".$_POST['weight']."', '".$_SESSION['user_id']."','".$_POST['whatsapp_code'].$_POST['whatsapp']."','".$_POST['in_town_st']."', '".$_POST['age']."', '".$sub_cat."' )";
+			$query = "INSERT INTO `Smart_FLC_Resource_Details` (`Resource_ID`,`First_Name`, `Resource_Type`, `Gender`, `Ethnicity`, `Height`, `Bust`, `Waist`, `Hips`, `HairColor`, `SkinColor`, `ShoesSize`, `EyesColor`, `Native_Language`, `Languages_Spoken`, `Date_Created`, `Last_Name`, `Cell_phone`, `Email1`, `Address`, `Nationality`, `DOB`, `DressSize`, `Weight`, `Created_By`,`whatsapp`, `In_Town_Status`,`Age`, `Sub_Category`, `new_sub_cats`) VALUES('".$res_id."', '".$_POST["fname"]."', '".implode(",",$_POST['category'])."', '".$_POST['gender']."', '".implode(",",$_POST['ethnicity'])."', '".$_POST["height"]."', '".$_POST["bust"]."', '".$_POST['waist']."', '".$_POST["hips"]."', '".$_POST['hair']."', '".$_POST["skin"]."', '".$_POST["shoe"]."', '".$_POST['eyes']."', '".$_POST["mlang"]."', '".implode(",",$_POST["olang"])."', '".$cur_date."', '".$_POST["lname"]."', '".$_POST['phone_code'].$_POST['phone']."', '".$_POST["email"]."', '".$_POST["address"]."', '".$_POST['country']."', '".date('Y-m-d', strtotime($_POST['dob']))."', '".implode(",",$_POST['dress'])."', '".$_POST['weight']."', '".$_SESSION['user_id']."','".$_POST['whatsapp_code'].$_POST['whatsapp']."','".$_POST['in_town_st']."', '".$_POST['age']."', '".$sub_cat."','".$new_sub_cat."' )";
 			
 			$r = mysqli_query($url, $query) or die(mysqli_error($url));
 			if($r){
@@ -652,7 +657,7 @@ $cat_arr=array(      "Model"
               <div class="form-group" style="display:none">
                 <label for="inputDob" class="col-sm-4 control-label">Age</label>
                 <div class="col-sm-8">
-                  <input type="number" class="form-control" id="inputDob" name="age"  />
+                  <input type="number" class="form-control" id="inputDob" name="age" value="0"  />
                 </div>
               </div>
                <div class="form-group">
@@ -660,11 +665,45 @@ $cat_arr=array(      "Model"
                 <div class="col-sm-8">
                 <?php foreach($cat_arr as $cat_val){ ?>
                   <label class="col-sm-4">
-                        <input value="<?php echo $cat_val; ?>" name="category[]" type="checkbox" class="foi_check"><?php echo $cat_val; ?>
+                        <input value="<?php echo $cat_val; ?>" name="category[]" type="checkbox" class="foi_check category_check"><?php echo $cat_val; ?>
                     </label>
                      <?php } ?>
                 </div>
               </div>
+              
+               <div class="form-group" style="display:none" >
+                <label for="inputCat" class="col-sm-4 control-label">Sub Category</label>
+                <div class="col-sm-8">
+                <div id="stylist-subs" class="sub_cats">
+                <?php
+				$sub_cat_arr=array("Food", "Hair", "Make-up", "Hair & Make-up", "Prop stylist", "Prosthetic Stylist", "Wardrobe", "Others", "Out of Town");
+				
+				 foreach($sub_cat_arr as $sub_cat){ 
+				 
+				 ?>
+					 
+                  <label class="col-sm-4">
+                        <input value="<?php echo $sub_cat; ?>" name="" type="checkbox" class="foi_check" ><?php echo $sub_cat; ?>
+                    </label>
+                 <?php }  ?>
+                 </div>
+                 <div  id="photogr-subs" class="sub_cats">
+                 <?php
+				$sub_cat_arr=array("International", "Advertising Beauty", "Editorial", "Fashion", "Hair", "Jewellery", "Lifestyle", "Food", "Product/ Still Life", "Aerial", "Hotel", "Interior/ Architecture", "Landscape", "Children", "Wedding", "Car", "Out of Town", "Under Water Photography");
+				 
+				 foreach($sub_cat_arr as $sub_cat){ 
+				 ?>
+					 
+                  <label class="col-sm-4">
+                        <input value="<?php echo $sub_cat; ?>" name="" type="checkbox" class="foi_check" ><?php echo $sub_cat; ?>
+                    </label>
+                 <?php } ?>
+                </div>
+                 
+                </div>
+                 
+              </div>
+              
               <div class="form-group">
                 <label for="inputEth" class="col-sm-4 control-label">Ethnicity</label>
                 <div class="col-sm-8">
@@ -1703,6 +1742,17 @@ $cat_arr=array(      "Model"
 				}
 			});	 
 	}
+	$(function(){
+		 $('.category_check').on('change', function() {
+			var val = this.checked ? this.value : '';
+			if(val=="Stylist"){ $("#stylist-subs").show();  $("#stylist-subs").parent().parent().show(); $("#stylist-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+			if(val=="Photographer"){ $("#photogr-subs").show();  $("#photogr-subs").parent().parent().show(); $("#photogr-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+			//
+			var un_val = !this.checked ? this.value : '';
+			if(un_val=="Stylist"){ $("#stylist-subs").hide();   $("#stylist-subs").find(".foi_check").attr('name','') }
+			if(un_val=="Photographer"){ $("#photogr-subs").hide();  $("#photogr-subs").find(".foi_check").attr('name','') }
+		});
+	})
 </script>
 <style type="text/css">
 .progress{ display:none}
@@ -1714,4 +1764,4 @@ input[type=file]{ display:inline-block;}
    </body>
 
 </html>
-<?php $_SESSION['img_files']=""; $_SESSION['img_count']=1; ob_end_flush(); ?>
+<?php $_SESSION['img_files']=array(); $_SESSION['img_count']=1; ob_end_flush(); ?>

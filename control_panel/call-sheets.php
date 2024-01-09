@@ -1,4 +1,8 @@
-<?php $active="sheets"; //echo phpinfo(); ?>
+<?php
+error_reporting(0);
+ob_start();
+session_start();
+ $active="sheets"; //echo phpinfo(); ?>
 <?php include_once('includes/header.php'); ?>
 
  <!-- Left side column. contains the sidebar -->

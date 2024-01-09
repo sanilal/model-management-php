@@ -235,6 +235,7 @@ include("includes/conn.php");
                         <th>Category</th>
                         <th>Ethnicity</th>
                         <th style="background:#fff;">Action</th>
+                        <th>Sub_cat</th>
                       </tr>
                     </thead>
                    
@@ -342,7 +343,7 @@ include("includes/conn.php");
 		"order": [[ 0, "desc" ]],
 		"columnDefs": [
             {
-                "targets": [ 0,6,7,8,9 ,10],
+                "targets": [ 0,6,7,8,9 ,10,11],
                 "visible": false
             },
 			{

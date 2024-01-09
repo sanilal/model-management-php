@@ -195,6 +195,9 @@ class SSP {
 				if ( $requestColumn['searchable'] == 'true' &&
 				 $str != '' ) {
 					 //var_dump($str);
+					 
+					
+					 
 					if($str=="Male"){
 						$binding = self::bind( $bindings, ''.$str.'', PDO::PARAM_STR );
 						$columnSearch[] = "`".$column['db']."` LIKE ".$binding;
@@ -204,12 +207,22 @@ class SSP {
 						$binding = self::bind( $bindings, ''.$age_arr[0].' AND '.$age_arr[1].'', PDO::PARAM_STR );
 					}*/
 					
-					else if($column['db']=="Age" ||  $column['db']=="Height"){
+					 if($column['db']=="job_created_by"){
+						 $binding = self::bind( $bindings, ''.$str.'', PDO::PARAM_STR );
+						$columnSearch[] = "`".$column['db']."` = ".$binding;
+					}
+					 
+					 else if($column['db']=="Age"){
 						$age_arr=explode(",",$str);
 						//$columnSearch[] = "`".$column['db']."` BETWEEN ".$age_arr[0].' AND '.$age_arr[1];
 						$columnSearch[] ="DATEDIFF(CURRENT_DATE, DOB) >= (".$age_arr[0]." * 365.25) AND DATEDIFF(CURRENT_DATE, DOB) <= (".$age_arr[1]." * 365.25)";
 					}
-					else if($column['db']=="Resource_Type" ||  $column['db']=="Ethnicity"){
+					else if($column['db']=="Height"){
+						$h_arr=explode(",",$str);
+						$columnSearch[] = "`".$column['db']."` BETWEEN ".$h_arr[0].' AND '.$h_arr[1];	
+					}
+					
+					 else if($column['db']=="Resource_Type" ||  $column['db']=="Ethnicity" || $column['db']=="new_sub_cats"){
 						
 						//echo "okay"; exit;
 						$str_arr=explode(",",$str);
@@ -218,11 +231,19 @@ class SSP {
 						foreach($str_arr as $str_val){
 							//$binding = self::bind( $bindings, '%'.$str_val.'%', PDO::PARAM_STR );
 							if($str_count==0){
+								
 								$customSearch .= " `".$column['db']."` LIKE '%".$str_val."%' ";
+								if($column['db']=="new_sub_cats"){
+									$customSearch .= " OR `Sub_Category` LIKE '%".$str_val."%' ";
+								}
 							}
 							else{
 								$customSearch .= " OR `".$column['db']."` LIKE '%".$str_val."%' ";
+								if($column['db']=="new_sub_cats"){
+									$customSearch .= " OR `Sub_Category` LIKE '%".$str_val."%' ";
+								}
 							}
+							
 							$str_count++;
 						}
 						$columnSearch[]="( ".$customSearch." ) ";

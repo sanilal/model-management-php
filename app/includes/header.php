@@ -60,6 +60,7 @@
                 </li>
                 <li><a href="about.php" title="FLC MODELS">ABOUT US</a></li>
                 <li><a href="contact.php" title="FLC MODELS">CONTACT US</a></li>
+                <li><a href="privacy.php" title="FLC MODELS">PRIVACY POLICY</a></li>
             </ul>
         </div>
        

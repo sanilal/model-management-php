@@ -1,8 +1,5 @@
 <?php
-error_reporting(0);
-ob_start();
-session_start();
-
+//var_dump($_SESSION); exit;
 if(!isset($_SESSION['user_id'])){
 	header("Location: logout.php");
 	echo "<script type='text/javascript'>window.top.location='logout.php';</script>";

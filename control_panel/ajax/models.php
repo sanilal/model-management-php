@@ -30,10 +30,12 @@ function get_fullName($val){
 }
 function get_Personal_Details($val){
 	global $url;
-	  $model=mysqli_fetch_object(mysqli_query($url,"select `Gender`, `DOB`,`Resource_Type`,`In_Town_Status`,`Sub_Category`, `Ethnicity`, `Nationality` from `Smart_FLC_Resource_Details` WHERE Resource_ID='".$val."'"));
+	  $model=mysqli_fetch_object(mysqli_query($url,"select `Gender`, `DOB`,`Resource_Type`,`In_Town_Status`,`Sub_Category`, `Ethnicity`, `Nationality`,`new_sub_cats` from `Smart_FLC_Resource_Details` WHERE Resource_ID='".$val."'"));
 	  $inter='<p>International Model/talent?:<b> No </b>';
 	 if(strpos($model->Sub_Category,"International")!== false){$inter='<p>International Model/talent?: <b>Yes </b>';}
-	  return '<p>Category: <b>'.$model->Resource_Type.'</b></p>
+	 $sub_cats="";
+	 if($model->new_sub_cats!=""){$sub_cats='<p>Sub Category: <b>'.$model->new_sub_cats.'</b></p>';}
+	  return '<p>Category: <b>'.$model->Resource_Type.'</b></p>'.$sub_cats.'
 	  <p>Ethnicity: <b>'.$model->Ethnicity.'</b></p>
 	  <p>Gender: <b>'.$model->Gender.'</b></p>
 	  <p>Age: <b>'.date_diff(date_create($model->DOB), date_create('today'))->y.'</b></p>
@@ -128,7 +130,8 @@ $columns = array(
         'formatter' => function( $d, $row ) {
             return '<a href="javascript:;" ref="'.$row['Resource_ID'].'" onClick="view_model(this)">View</a> &nbsp; &nbsp; <a href="edit-model.php?r_id='.$row['Resource_ID'].'">Edit</a> &nbsp; &nbsp; <a href="javascript:;" onclick="removeItem('."'".$row['Resource_ID']."'".')">Delete</a>';
         }
-    )
+    ),
+	 array('db' => 'new_sub_cats', 'dt' => 11 )
 );
  
 // SQL server connection information

@@ -37,6 +37,9 @@ class Models {
 	///////////////////////////////////////////////
 	public function getModels($type=NULL,$id=NULL,$gend=NULL){
 		$this->db_connection=db_connect();
+		$gend=mysqli_real_escape_string($this->db_connection,$gend);
+		$type=mysqli_real_escape_string($this->db_connection,$type);
+		$id=mysqli_real_escape_string($this->db_connection,$id);
 		if (!$this->db_connection->connect_errno) {
 			if ($gend!=NULL){
 				$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor, SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE Gender='$gend' && Resource_Type LIKE '%$type%' LIMIT 0,27 ");
@@ -58,7 +61,7 @@ class Models {
 		$this->db_connection=db_connect();
 		if (!$this->db_connection->connect_errno) {
 			$eth_str=implode("', '", $eth);
-			$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE Resource_Type LIKE '%Kids%' && Ethnicity IN('$eth_str') LIMIT 0,27 ");
+			$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE Resource_Type LIKE '%Kids%' && Ethnicity IN('".mysqli_real_escape_string($this->db_connection,$eth_str)."') LIMIT 0,27 ");
 			return $stmt;
 			$this->errors[] = "Sorry, Please go back and try again.";
 		}else {
@@ -82,7 +85,7 @@ class Models {
 			$no_limit=$this->limit;
 			$page_query=$in_town_q."ORDER BY First_Name ASC LIMIT 0,".$no_limit;
 			if(isset($_REQUEST['page'])){
-				$page=$_REQUEST['page']-1;
+				$page=mysqli_real_escape_string($this->db_connection,$_REQUEST['page'])-1;
 				$page=$page*$no_limit;
 				$page_query=$in_town_q."ORDER BY First_Name ASC LIMIT ".$page.",".$no_limit;
 			}
@@ -91,11 +94,11 @@ class Models {
 				//$eth_str=implode("', '", $eth);
 				$eth_str="";
 				foreach($eth as $ethn){
-					$eth_str.=" Ethnicity Like '%".$ethn."%' ||";
+					$eth_str.=" Ethnicity Like '%".mysqli_real_escape_string($this->db_connection,$ethn)."%' ||";
 				}
 				$eth_str_new=substr($eth_str, 0, -2);
 				if($age!=NULL){
-					$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%$name%' || Resource_ID LIKE '%$name%')  && Gender='$gend' && Age BETWEEN ".$age." && (".$eth_str_new.") && Resource_Type LIKE '%$type%' ".$page_query);
+					$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%' || Resource_ID LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%')  && Gender='$gend' && Age BETWEEN ".mysqli_real_escape_string($this->db_connection,$age)." && (".$eth_str_new.") && Resource_Type LIKE '%".mysqli_real_escape_string($this->db_connection,$type)."%' ".$page_query);
 				}
 				else{
 					$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%$name%' || Resource_ID LIKE '%$name%')  && Gender='$gend' && (".$eth_str_new.") && Resource_Type LIKE '%$type%' ".$page_query);
@@ -138,7 +141,7 @@ class Models {
 				//$eth_str=implode("', '", $eth);
 				$eth_str="";
 				foreach($eth as $ethn){
-					$eth_str.=" Ethnicity Like '%".$ethn."%' ||";
+					$eth_str.=" Ethnicity Like '%".mysqli_real_escape_string($this->db_connection,$ethn)."%' ||";
 				}
 				$eth_str_new=substr($eth_str, 0, -2);
 				if($age!=NULL){
@@ -188,16 +191,16 @@ class Models {
 			$no_limit=$this->limit;
 			$page_query=$in_town_q."ORDER BY First_Name ASC LIMIT 0,".$no_limit;
 			if(isset($_REQUEST['page'])){
-				$page=$_REQUEST['page']-1;
+				$page=mysqli_real_escape_string($this->db_connection,$_REQUEST['page'])-1;
 				$page=$page*$no_limit;
 				$page_query=$in_town_q."ORDER BY First_Name ASC LIMIT ".$page.",".$no_limit;
 			}
 			//
 			if($cat!=""){
-				$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%$name%' || Resource_ID LIKE '%$name%')  && Sub_Category LIKE '%$cat%' && Resource_Type LIKE '%$type%' ".$page_query);
+				$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%' || Resource_ID LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%')  && (Sub_Category LIKE '%".mysqli_real_escape_string($this->db_connection,$cat)."%' OR `new_sub_cats` LIKE '%".mysqli_real_escape_string($this->db_connection,$cat)."%' ) && Resource_Type LIKE '%".mysqli_real_escape_string($this->db_connection,$type)."%' ".$page_query);
 			}
 			else{
-				$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%$name%' || Resource_ID LIKE '%$name%')  && Resource_Type LIKE '%$type%' ".$page_query);
+				$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%' || Resource_ID LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%')  && Resource_Type LIKE '%".mysqli_real_escape_string($this->db_connection,$type)."%' ".$page_query);
 			}
 			return $stmt;
 			$this->errors[] = "Sorry, Please go back and try again.";
@@ -213,9 +216,12 @@ class Models {
 		if (!$this->db_connection->connect_errno) {
 			$in_town_q=" && In_Town_Status!='No' ";
 			//$in_town_q="";
+			$name=mysqli_real_escape_string($this->db_connection,$name);
+			$type=mysqli_real_escape_string($this->db_connection,$type);
+			$cat=mysqli_real_escape_string($this->db_connection,$cat);
 			$page_query=$in_town_q."ORDER BY First_Name ASC";
 			if($cat!=""){
-				$stmt = $this->db_connection->query("SELECT count(Resource_ID) as total FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%$name%' || Resource_ID LIKE '%$name%')  && Resource_Type LIKE '%$type%' && Sub_Category LIKE '%$cat%' ".$page_query);
+				$stmt = $this->db_connection->query("SELECT count(Resource_ID) as total FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%$name%' || Resource_ID LIKE '%$name%')  && Resource_Type LIKE '%$type%' && (Sub_Category LIKE '%".mysqli_real_escape_string($this->db_connection,$cat)."%' OR `new_sub_cats` LIKE '%".mysqli_real_escape_string($this->db_connection,$cat)."%' ) ".$page_query);
 			}
 			else{
 				$stmt = $this->db_connection->query("SELECT count(Resource_ID) as total FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%$name%' || Resource_ID LIKE '%$name%')  && Resource_Type LIKE '%$type%' ".$page_query);
@@ -245,7 +251,7 @@ class Models {
 				$page_query=$in_town_q."ORDER BY First_Name ASC LIMIT 0,".$no_limit;
 			}
 			if(isset($_REQUEST['page'])){
-				$page=$_REQUEST['page']-1;
+				$page=mysqli_real_escape_string($this->db_connection,$_REQUEST['page'])-1;
 				$page=$page*$no_limit;
 				$page_query=$in_town_q."ORDER BY First_Name ASC LIMIT ".$page.",".$no_limit;
 			}
@@ -253,7 +259,7 @@ class Models {
 			if($eth!=NULL){
 				$eth_str="";
 				foreach($eth as $ethn){
-					$eth_str.=" Ethnicity Like '%".$ethn."%' ||";
+					$eth_str.=" Ethnicity Like '%".mysqli_real_escape_string($this->db_connection,$ethn)."%' ||";
 				}
 				$eth_str_new="&& (".substr($eth_str, 0, -2).")";
 			}
@@ -262,28 +268,29 @@ class Models {
 			}
 			//
 			if($age!=NULL){
-				$age_query="&& Age BETWEEN ".$age;
+				$age_query="&& Age BETWEEN ". mysqli_real_escape_string($this->db_connection,$age);
 			}
 			else{$age_query=""; }
 			if($cat!=NULL){
 				if($cat=="NOTIN"){
-					$cat_query="&& Sub_Category NOT LIKE '%Internationals%'";
+					$cat_query="&& Sub_Category NOT LIKE '%International%'";
 				}
-				else $cat_query="&& Sub_Category LIKE '%".$cat."%'";
+				else $cat_query="&& Sub_Category LIKE '%International%'";
 			}
 			else{$cat_query=""; }
 			//
 			if($lang!=NULL){
 				$lang_str="";
 				foreach($lang as $langn){
-					$lang_str.=" Native_Language Like '%".$langn."%' || Languages_Spoken Like '%".$langn."%' ||";
+					$lang_str.=" Native_Language Like '%".mysqli_real_escape_string($this->db_connection,$langn)."%' || Languages_Spoken Like '%".mysqli_real_escape_string($this->db_connection,$langn)."%' ||";
 				}
 				$lang_str_new="&& (".substr($lang_str, 0, -2).")";
 			}
 			else{ $lang_str_new=""; }
 			//
+			//echo $cat_query;
 			
-			$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%$name%' || Resource_ID LIKE '%$name%')  && Gender='$gend' ".$age_query." ".$eth_str_new." ".$lang_str_new." ".$cat_query." && Resource_Type LIKE '%$type%' ".$page_query);
+			$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%' || Resource_ID LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%')  && Gender='".mysqli_real_escape_string($this->db_connection,$gend)."' ".$age_query." ".$eth_str_new." ".$lang_str_new." ".$cat_query." && Resource_Type LIKE '%".mysqli_real_escape_string($this->db_connection,$type)."%' ".$page_query);
 			return $stmt;
 			$this->errors[] = "Sorry, Please go back and try again.";
 		}else {
@@ -304,7 +311,7 @@ class Models {
 			if($eth!=NULL){
 				$eth_str="";
 				foreach($eth as $ethn){
-					$eth_str.=" Ethnicity Like '%".$ethn."%' ||";
+					$eth_str.=" Ethnicity Like '%".mysqli_real_escape_string($this->db_connection,$ethn)."%' ||";
 				}
 				$eth_str_new="&& (".substr($eth_str, 0, -2).")";
 			}
@@ -313,28 +320,28 @@ class Models {
 			}
 			//
 			if($age!=NULL){
-				$age_query="&& Age BETWEEN ".$age;
+				$age_query="&& Age BETWEEN ".mysqli_real_escape_string($this->db_connection,$age);
 			}
 			else{$age_query=""; }
 			//
 			if($cat!=NULL){
 				if($cat=="NOTIN"){
-					$cat_query="&& Sub_Category NOT LIKE '%Internationals%'";
+					$cat_query="&& Sub_Category NOT LIKE '%International%'";
 				}
-				else $cat_query="&& Sub_Category LIKE '%".$cat."%'";
+				else $cat_query="&& Sub_Category LIKE '%International%'";
 			}
 			else{$cat_query=""; }
 			//
 			if($lang!=NULL){
 				$lang_str="";
 				foreach($lang as $langn){
-					$lang_str.=" Native_Language Like '%".$langn."%' || Languages_Spoken Like '%".$langn."%' ||";
+					$lang_str.=" Native_Language Like '%".mysqli_real_escape_string($this->db_connection,$langn)."%' || Languages_Spoken Like '%".mysqli_real_escape_string($this->db_connection,$langn)."%' ||";
 				}
 				$lang_str_new="&& (".substr($lang_str, 0, -2).")";
 			}
 			else{ $lang_str_new=""; }
 			
-			$stmt = $this->db_connection->query("SELECT count(Resource_ID) as total FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%$name%' || Resource_ID LIKE '%$name%')  && Gender='$gend' ".$age_query." ".$eth_str_new." ".$lang_str_new." ".$cat_query." && Resource_Type LIKE '%$type%' ".$page_query);
+			$stmt = $this->db_connection->query("SELECT count(Resource_ID) as total FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%' || Resource_ID LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%')  && Gender='".mysqli_real_escape_string($this->db_connection,$gend)."' ".$age_query." ".$eth_str_new." ".$lang_str_new." ".$cat_query." && Resource_Type LIKE '%".mysqli_real_escape_string($this->db_connection,$type)."%' ".$page_query);
 				
 			return $stmt;
 			$this->errors[] = "Sorry, Please go back and try again.";
@@ -365,7 +372,7 @@ class Models {
 	public function getallAge($type=NULL){
 		$this->db_connection=db_connect();
 		if (!$this->db_connection->connect_errno) {
-			if ($stmt = $this->db_connection->query("SELECT DISTINCT Age FROM Smart_FLC_Resource_Details WHERE Age !='' && Age !='0' && Resource_Type LIKE '%$type%' ORDER BY Age ASC")){
+			if ($stmt = $this->db_connection->query("SELECT DISTINCT Age FROM Smart_FLC_Resource_Details WHERE Age !='' && Age !='0' && Resource_Type LIKE '%".mysqli_real_escape_string($this->db_connection,$type)."%' ORDER BY Age ASC")){
 				return $stmt;
 			}else {
 				$this->errors[] = "Sorry, Please go back and try again.";
@@ -379,7 +386,7 @@ class Models {
 	public function getallEthnicity($type=NULL){
 		$this->db_connection=db_connect();
 		if (!$this->db_connection->connect_errno) {
-			if ($stmt = $this->db_connection->query("SELECT DISTINCT Ethnicity FROM Smart_FLC_Resource_Details WHERE Ethnicity NOT LIKE '%,%' && Resource_Type LIKE '%$type%' ORDER BY Ethnicity ASC")){
+			if ($stmt = $this->db_connection->query("SELECT DISTINCT Ethnicity FROM Smart_FLC_Resource_Details WHERE Ethnicity NOT LIKE '%,%' && Resource_Type LIKE '%".mysqli_real_escape_string($this->db_connection,$type)."%' ORDER BY Ethnicity ASC")){
 				return $stmt;
 			}else {
 				$this->errors[] = "Sorry, Please go back and try again.";
@@ -393,7 +400,7 @@ class Models {
 	public function getallLang($type=NULL){
 		$this->db_connection=db_connect();
 		if (!$this->db_connection->connect_errno) {
-			if ($stmt = $this->db_connection->query("SELECT DISTINCT Native_Language FROM Smart_FLC_Resource_Details WHERE Native_Language NOT LIKE '%,%' && Resource_Type LIKE '%$type%' ORDER BY Native_Language ASC")){
+			if ($stmt = $this->db_connection->query("SELECT DISTINCT Native_Language FROM Smart_FLC_Resource_Details WHERE Native_Language NOT LIKE '%,%' && Resource_Type LIKE '%".mysqli_real_escape_string($this->db_connection,$type)."%' ORDER BY Native_Language ASC")){
 				return $stmt;
 			}else {
 				$this->errors[] = "Sorry, Please go back and try again.";
@@ -433,7 +440,7 @@ class Models {
 				$page_query=$in_town_q."ORDER BY First_Name ASC LIMIT 0,".$no_limit;
 			}
 			if(isset($_REQUEST['page'])){
-				$page=$_REQUEST['page']-1;
+				$page=mysqli_real_escape_string($this->db_connection,$_REQUEST['page'])-1;
 				$page=$page*$no_limit;
 				$page_query=$in_town_q."ORDER BY First_Name ASC LIMIT ".$page.",".$no_limit;
 			}
@@ -441,7 +448,7 @@ class Models {
 			if($eth!=NULL){
 				$eth_str="";
 				foreach($eth as $ethn){
-					$eth_str.=" Ethnicity Like '%".$ethn."%' ||";
+					$eth_str.=" Ethnicity Like '%".mysqli_real_escape_string($this->db_connection,$ethn)."%' ||";
 				}
 				$eth_str_new="&& (".substr($eth_str, 0, -2).")";
 			}
@@ -450,33 +457,33 @@ class Models {
 			}
 			//
 			if($age!=NULL){
-				$age_query="&& Age BETWEEN ".$age;
+				$age_query="&& Age BETWEEN ".mysqli_real_escape_string($this->db_connection,$age);
 			}
 			else{$age_query=""; }
 			//
 			if($gend!=""){
-				$gend_query="&& Gender='$gend' ";
+				$gend_query="&& Gender='".mysqli_real_escape_string($this->db_connection,$gend)."' ";
 			}
 			else{ $gend_query="";}
 			//
 			if($cat!=NULL){
 				if($cat=="NOTIN"){
-					$cat_query="&& Sub_Category NOT LIKE '%Internationals%'";
+					$cat_query="&& Sub_Category NOT LIKE '%International%'";
 				}
-				else $cat_query="&& Sub_Category LIKE '%".$cat."%'";
+				else $cat_query="&& Sub_Category LIKE '%International%'";
 			}
 			else{$cat_query=""; }
 			//
 			if($lang!=NULL){
 				$lang_str="";
 				foreach($lang as $langn){
-					$lang_str.=" Native_Language Like '%".$langn."%' || Languages_Spoken Like '%".$langn."%' ||";
+					$lang_str.=" Native_Language Like '%".mysqli_real_escape_string($this->db_connection,$langn)."%' || Languages_Spoken Like '%".mysqli_real_escape_string($this->db_connection,$langn)."%' ||";
 				}
 				$lang_str_new="&& (".substr($lang_str, 0, -2).")";
 			}
 			else{ $lang_str_new=""; }
 			//
-			$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%$name%' || Resource_ID LIKE '%$name%') ".$gend_query." ".$age_query." ".$eth_str_new." ".$lang_str_new." ".$cat_query."  ".$page_query);
+			$stmt = $this->db_connection->query("SELECT Resource_ID,Resource_Type,Sub_Category,First_Name,Gender,Age,Ethnicity,Client_ID,Height,Bust,Waist,Hips,HairColor,ShoesSize,EyesColor,SkinColor,Status,Date_Created,Created_By,Date_Modified,Modified_By,In_Town_Status FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%' || Resource_ID LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%') ".$gend_query." ".$age_query." ".$eth_str_new." ".$lang_str_new." ".$cat_query."  ".$page_query);
 			return $stmt;
 			$this->errors[] = "Sorry, Please go back and try again.";
 		}else {
@@ -497,7 +504,7 @@ class Models {
 			if($eth!=NULL){
 				$eth_str="";
 				foreach($eth as $ethn){
-					$eth_str.=" Ethnicity Like '%".$ethn."%' ||";
+					$eth_str.=" Ethnicity Like '%".mysqli_real_escape_string($this->db_connection,$ethn)."%' ||";
 				}
 				$eth_str_new="&& (".substr($eth_str, 0, -2).")";
 			}
@@ -506,33 +513,33 @@ class Models {
 			}
 			//
 			if($age!=NULL){
-				$age_query="&& Age BETWEEN ".$age;
+				$age_query="&& Age BETWEEN ".mysqli_real_escape_string($this->db_connection,$age);
 			}
 			else{$age_query=""; }
 			//
 			if($gend!=""){
-				$gend_query="&& Gender='$gend' ";
+				$gend_query="&& Gender='".mysqli_real_escape_string($this->db_connection,$gend)."' ";
 			}
 			else{ $gend_query="";}
 			//
 			if($cat!=NULL){
 				if($cat=="NOTIN"){
-					$cat_query="&& Sub_Category NOT LIKE '%Internationals%'";
+					$cat_query="&& Sub_Category NOT LIKE '%International%'";
 				}
-				else $cat_query="&& Sub_Category LIKE '%".$cat."%'";
+				else $cat_query="&& Sub_Category LIKE '%International%'";
 			}
 			else{$cat_query=""; }
 			//
 			if($lang!=NULL){
 				$lang_str="";
 				foreach($lang as $langn){
-					$lang_str.=" Native_Language Like '%".$langn."%' || Languages_Spoken Like '%".$langn."%' ||";
+					$lang_str.=" Native_Language Like '%".mysqli_real_escape_string($this->db_connection,$langn)."%' || Languages_Spoken Like '%".mysqli_real_escape_string($this->db_connection,$langn)."%' ||";
 				}
 				$lang_str_new="&& (".substr($lang_str, 0, -2).")";
 			}
 			else{ $lang_str_new=""; }
 			
-			$stmt = $this->db_connection->query("SELECT count(Resource_ID) as total FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%$name%' || Resource_ID LIKE '%$name%') ".$gend_query." ".$age_query." ".$eth_str_new." ".$lang_str_new." ".$cat_query." ".$page_query);
+			$stmt = $this->db_connection->query("SELECT count(Resource_ID) as total FROM Smart_FLC_Resource_Details WHERE  (First_Name LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%' || Resource_ID LIKE '%".mysqli_real_escape_string($this->db_connection,$name)."%') ".$gend_query." ".$age_query." ".$eth_str_new." ".$lang_str_new." ".$cat_query." ".$page_query);
 				
 			return $stmt;
 			$this->errors[] = "Sorry, Please go back and try again.";

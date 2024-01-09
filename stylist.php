@@ -63,12 +63,13 @@ $type_var="stylist";
 
 					<Select class="form-control" id="categories" name="categories">
                         <option value="">All</option>
-                        <option <?php if($category=='Hair Stylist'){ echo 'selected="selected"';} ?>>Hair Stylist</option>
-                        <option <?php if($category=='Makeup Artist'){ echo 'selected="selected"';} ?>>Makeup Artist</option>
-                        <option <?php if($category=='Prop Master'){ echo 'selected="selected"';} ?>>Prop Master</option>
-                        <option <?php if($category=='Fashion Stylis'){ echo 'selected="selected"';} ?>>Fashion Stylist</option>
-                        <option <?php if($category=='Food Stylist'){ echo 'selected="selected"';} ?>>Food Stylist</option>
-                        <option <?php if($category=='Product Stylist'){ echo 'selected="selected"';} ?>>Product Stylist</option>
+                        <?php
+						$sub_cat_arr=array("Food", "Hair", "Make-up", "Hair & Make-up", "Prop stylist", "Prosthetic Stylist", "Wardrobe", "Others", "Out of Town");
+				
+				 foreach($sub_cat_arr as $sub_cat){ ?>
+                        <option <?php if($category==$sub_cat){ echo 'selected="selected"';} ?>><?php echo $sub_cat; ?></option>
+                   <?php } ?>
+                      
                     </Select>
                             
 

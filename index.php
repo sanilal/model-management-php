@@ -10,8 +10,41 @@
 			<link rel="stylesheet" type="text/css" href="assets/revolution/css/layers.css">
 			<!-- REVOLUTION NAVIGATION STYLES -->
 			<link rel="stylesheet" type="text/css" href="assets/revolution/css/navigation.css">
+			<style>
+			    #popupwraper {
+			        width: 100%;
+			        height: 100vh;
+			        position: absolute;
+			        z-index: 999999;
+                    background: rgba(0, 0, 0, .5);
+			    }
+			    .popupimage {
+			        position: relative;
+			        top: 20%;
+			        margin: auto;
+			        background: #fff;
+			        width: 500px;
+			        max-width:100%;
+			    }
+			    .popclose {
+			        position: absolute;
+			        width:25px;
+			        height:25px;
+			        background: #000;
+			        color: #fff;
+			        right: -25px;
+                    padding: 1px 6px;
+                    cursor: pointer;
+			    }
+			</style>
   </head>
   <body>
+    <div id="popupwraper">
+        <div class="popupimage">
+            <div class="popclose">X</div>
+            <img src="image/flc-models-popup.jpeg" class="img-fluid" />
+        </div>
+    </div>  
     <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -467,12 +500,13 @@
     
   <section class="aboutSection">
   	<div class="container">
-    	<h2>Welcome To FLC Production & Model Management</h2>
+    	<!--<h2>Welcome To FLC Production & Model Management</h2>-->
+        <h1 class="pagetitle">Welcome To FLC Production & Model Management</h1>
         <div class="smallBrdrOuter"><div class="smallBrdr"></div></div>
         
         <?php /*?><h3>We at FLC Production & Model Management provide you with a range of local & international models according to your needs</h3><?php */?>
         
-        <p>We are a Dubai Based Production & Model Management Agency servicing national and international clients on Print & Video Productions, Fashion Shows and providing a 
+        <p>We are a <strong class="leadtxt">Dubai Based Production & Model Management Agency</strong> servicing national and international clients on Print & Video Productions, Fashion Shows and providing a 
         range of local and international Models, Casts, Kids, Photographers & Stylists for Shoots. With a passion for what we do, we understand every client’s requirements 
         and make every experience efficient, professional and most of all, fun. Our network of production partnerships and a reputation for delivering cost-effective, quality production 
         service gives us the edge to deliver better results.</p>
@@ -575,6 +609,14 @@ jsFileLocation:"assets/revslider/wp-content/plugins/revslider/public/assets/js/"
 					});
 				}
 			});	/*ready*/
+		</script>
+		<script>
+		    $(document).ready(function(){
+		        $(".popclose").click(function(){
+		            $("#popupwraper").remove();
+		        })
+		    })
+		    
 		</script>
  
   </body>

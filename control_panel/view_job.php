@@ -59,6 +59,7 @@ include("includes/conn.php");
 </style>
  <?php 
   $job=mysqli_fetch_object(mysqli_query($url,"select * from `Smart_FLC_jobs` WHERE `job_id`='".$_GET['j_id']."'"));
+  //var_dump($job);
   //echo "select * from `Smart_FLC_Resource_Details` WHERE Resource_ID=".$_GET['r_id'];
   ?>
       <!-- Content Wrapper. Contains page content -->

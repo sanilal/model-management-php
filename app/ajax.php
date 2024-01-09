@@ -9,7 +9,7 @@ ob_start();
 			 $check_sql="";
 			 //var_dump($_SESSION['deviceid']);
 			 if(isset($_SESSION['deviceid'])){
-				 $res_not_dev=$db_connection->query("SELECT * FROM device_notes WHERE device_id = '".$_SESSION['deviceid']."' ORDER BY id DESC");
+				 $res_not_dev=$db_connection->query("SELECT * FROM device_notes WHERE device_id = '".mysqli_real_escape_string($db_connection,$_SESSION['deviceid'])."' ORDER BY id DESC");
 					$row_not_dev=$res_not_dev->fetch_object();
 					if($row_not_dev->id){
 						$check_sql=" && id > ".$row_not_dev->last_note_id;

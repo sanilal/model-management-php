@@ -106,7 +106,7 @@ include("includes/conn.php");
             <div class="box-body">
                  
                   <table border="1" style="text-align:left" width="100%">
-                   <?php $booker_name=mysqli_fetch_object(mysqli_query($url,"SELECT user_name FROM `lcfd_users_login` WHERE user_id=".$job->job_created_by)); ?>
+                   <?php $booker_name=mysqli_fetch_object(mysqli_query($url,"SELECT user_name FROM `fdl_bookers_gin` WHERE user_id=".$job->job_created_by)); ?>
                   <thead style="background:#B6B6B6">
                   <tr>
                   	<td colspan="8"><b>Call Sheet</b>: <?php echo $booker_name->user_name; ?></td>

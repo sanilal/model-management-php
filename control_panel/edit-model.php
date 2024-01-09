@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 ob_start();
 session_start();
 ?>
@@ -15,6 +16,7 @@ session_start();
 .form-group label{ text-align:left !important;}
 .crop_button{ position:absolute; left:20px; bottom:0}
 .del_button{ position:absolute; right:20px; bottom:0}
+.sub_cats{ display:none;}
 </style>
 
 
@@ -29,8 +31,12 @@ include("includes/conn.php");
 		$error="";
 		if($_POST['fname']!="" || $_POST['email']!="" || $_POST['phone']!="" || $_POST['dob']!="" || $_POST['gender']!="" || $_POST['country']!="" || $_POST['mlang']!=""  || $_POST['height']!=""  || $_POST['weight']!=""  ){	
 		
+		$new_sub_cat="";$sub_cat="";
 		if(isset($_POST['sub_cats'])){
 				$sub_cat=implode(",",$_POST['sub_cats']);
+			}
+			if(isset($_POST['new_sub_cats'])){
+				$new_sub_cat=implode(",",$_POST['new_sub_cats']);
 			}		
 			
 						$cur_date=date("Y-m-d H:i:s");
@@ -38,7 +44,7 @@ include("includes/conn.php");
 			 //echo $last_model->Resource_ID."<br/>";
 			 //$res_id=ltrim($last_model->Resource_ID,'F')+10; 
 			 //$res_id='F'.$res_id;
-			$query = "UPDATE `Smart_FLC_Resource_Details` SET `First_Name`='".$_POST["fname"]."', `Resource_Type`='".implode(",",$_POST['category'])."', `Gender`='".$_POST['gender']."', `Ethnicity`='".implode(",",$_POST['ethnicity'])."', `Height`='".$_POST["height"]."', `Bust`='".$_POST["bust"]."', `Waist`='".$_POST['waist']."', `Hips`='".$_POST["hips"]."', `HairColor`='".$_POST['hair']."', `SkinColor`='".$_POST["skin"]."', `ShoesSize`='".$_POST["shoe"]."', `EyesColor`='".$_POST['eyes']."', `Native_Language`='".$_POST["mlang"]."', `Languages_Spoken`='".$_POST["olang"]."',  `Last_Name`='".$_POST["lname"]."', `Cell_phone`='".$_POST['phone']."', `Email1`='".$_POST["email"]."', `Address`='".$_POST["address"]."', `Nationality`='".$_POST['country']."', `DOB`='".date('Y-m-d', strtotime($_POST['dob']))."', `DressSize`='".implode(",",$_POST['dress'])."', `Weight`='".$_POST['weight']."', `Modified_By`='".$_SESSION['user_id']."', `Date_Modified`='$cur_date', `publish_photo`='".$_POST['publish_photo']."',`whatsapp`='".$_POST['whatsapp']."',`In_Town_Status`='".$_POST['in_town_st']."', `Age`='".$_POST['age']."', `Sub_Category`='".$sub_cat."' WHERE Resource_ID='$id' ";
+			$query = "UPDATE `Smart_FLC_Resource_Details` SET `First_Name`='".$_POST["fname"]."', `Resource_Type`='".implode(",",$_POST['category'])."', `Gender`='".$_POST['gender']."', `Ethnicity`='".implode(",",$_POST['ethnicity'])."', `Height`='".$_POST["height"]."', `Bust`='".$_POST["bust"]."', `Waist`='".$_POST['waist']."', `Hips`='".$_POST["hips"]."', `HairColor`='".$_POST['hair']."', `SkinColor`='".$_POST["skin"]."', `ShoesSize`='".$_POST["shoe"]."', `EyesColor`='".$_POST['eyes']."', `Native_Language`='".$_POST["mlang"]."', `Languages_Spoken`='".$_POST["olang"]."',  `Last_Name`='".$_POST["lname"]."', `Cell_phone`='".$_POST['phone']."', `Email1`='".$_POST["email"]."', `Address`='".$_POST["address"]."', `Nationality`='".$_POST['country']."', `DOB`='".date('Y-m-d', strtotime($_POST['dob']))."', `DressSize`='".implode(",",$_POST['dress'])."', `Weight`='".$_POST['weight']."', `Modified_By`='".$_SESSION['user_id']."', `Date_Modified`='$cur_date', `publish_photo`='".$_POST['publish_photo']."',`whatsapp`='".$_POST['whatsapp']."',`In_Town_Status`='".$_POST['in_town_st']."', `Age`='".$_POST['age']."', `Sub_Category`='".$sub_cat."',`new_sub_cats`='".$new_sub_cat."' WHERE Resource_ID='$id' ";
 			
 			$r = mysqli_query($url, $query) or die(mysqli_error($url));
 			$r=true;
@@ -315,12 +321,71 @@ $dress_arr=array("Extra Small","Small","Medium","Large","Extra Large");
 				$model_cats=explode(",",$model->Resource_Type);
 				 foreach($cat_arr as $cat_val){ ?>
                   <label class="col-sm-4">
-                        <input value="<?php echo $cat_val; ?>" name="category[]" type="checkbox" class="foi_check" <?php if(in_array($cat_val,$model_cats)){ echo 'checked="checked"';} ?>><?php echo $cat_val; ?>
+                        <input value="<?php echo $cat_val; ?>" name="category[]" type="checkbox" class="foi_check category_check" <?php if(in_array($cat_val,$model_cats)){ echo 'checked="checked"';} ?>><?php echo $cat_val; ?>
                     </label>
                  <?php } ?>
                     
                 </div>
               </div>
+              
+                <div class="form-group" <?php if (!array_intersect(array("Photographer","Stylist"), $model_cats)) { echo 'style="display:none"'; } ?> >
+                <label for="inputCat" class="col-sm-4 control-label">Sub Category</label>
+                <div class="col-sm-8">
+                <div id="stylist-subs" <?php if (in_array("Stylist", $model_cats)) { echo 'style="display:block"'; } ?> class="sub_cats">
+                <?php
+				$sub_cat_arr=array("Food", "Hair", "Make-up", "Hair & Make-up", "Prop stylist", "Prosthetic Stylist", "Wardrobe", "Others", "Out of Town");
+				if($model->Sub_Category!="" && $model->new_sub_cats==""){
+					 $model_sub_cats=explode(",",$model->Sub_Category);
+				 foreach($sub_cat_arr as $sub_cat){ 
+				 	$check_sub_cat="";
+				 	foreach($model_sub_cats as $mode_sub_cat){
+						if (strpos($sub_cat, $mode_sub_cat) !== FALSE) {
+							$check_sub_cat='checked="checked"';
+						}
+					}
+				 ?>
+					  <label class="col-sm-4">
+                        <input value="<?php echo $sub_cat; ?>" name="<?php if (in_array("Stylist", $model_cats)) { echo 'new_sub_cats'; } ?>" type="checkbox" class="foi_check" <?php echo $check_sub_cat; ?>><?php echo $sub_cat; ?>
+                    </label>
+
+                 <?php } } else{
+				$model_sub_cats=explode(",",$model->new_sub_cats);
+				 foreach($sub_cat_arr as $sub_cat){ ?>
+                  <label class="col-sm-4">
+                        <input value="<?php echo $sub_cat; ?>" name="<?php if (in_array("Stylist", $model_cats)) { echo 'new_sub_cats'; } ?>" type="checkbox" class="foi_check" <?php if(in_array($sub_cat, $model_sub_cats)){ echo 'checked="checked"';} ?>><?php echo $sub_cat; ?>
+                    </label>
+                 <?php } } ?>
+                 </div>
+                 <div  id="photogr-subs" <?php if (in_array("Photographer", $model_cats)) { echo 'style="display:block"'; } ?> class="sub_cats">
+                 <?php
+				$sub_cat_arr=array("International", "Advertising Beauty", "Editorial", "Fashion", "Hair", "Jewellery", "Lifestyle", "Food", "Product/ Still Life", "Aerial", "Hotel", "Interior/ Architecture", "Landscape", "Children", "Wedding", "Car", "Out of Town", "Under Water Photography");
+				 if($model->Sub_Category!="" && $model->new_sub_cats==""){
+					 $model_sub_cats=explode(",",$model->Sub_Category);
+				 foreach($sub_cat_arr as $sub_cat){ 
+				 	$check_sub_cat="";
+				 	foreach($model_sub_cats as $mode_sub_cat){
+						if (strpos($sub_cat, $mode_sub_cat) !== FALSE) {
+							$check_sub_cat='checked="checked"';
+						}
+					}
+				 ?>
+					  <label class="col-sm-4">
+                        <input value="<?php echo $sub_cat; ?>" name="<?php if (in_array("Photographer", $model_cats)) { echo 'new_sub_cats'; } ?>" type="checkbox" class="foi_check" <?php echo $check_sub_cat; ?>><?php echo $sub_cat; ?>
+                    </label>
+
+                 <?php } } else{
+				$model_sub_cats=explode(",",$model->new_sub_cats);
+				 foreach($sub_cat_arr as $sub_cat){ ?>
+                  <label class="col-sm-4">
+                        <input value="<?php echo $sub_cat; ?>" name="<?php if (in_array("Photographer", $model_cats)) { echo 'new_sub_cats'; } ?>" type="checkbox" class="foi_check" <?php if(in_array($sub_cat, $model_sub_cats)){ echo 'checked="checked"';} ?>><?php echo $sub_cat; ?>
+                    </label>
+                 <?php } } ?>
+                </div>
+                 
+                </div>
+                 
+              </div>
+              
               <div class="form-group">
                 <label for="inputEth" class="col-sm-4 control-label">Ethnicity</label>
                 <div class="col-sm-8">
@@ -835,6 +900,15 @@ input[type=file]{ display:inline-block;}
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
   $( function() {
+	  $('.category_check').on('change', function() {
+			var val = this.checked ? this.value : '';
+			if(val=="Stylist"){ $("#stylist-subs").show();  $("#stylist-subs").parent().parent().show(); $("#stylist-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+			if(val=="Photographer"){ $("#photogr-subs").show();  $("#photogr-subs").parent().parent().show(); $("#photogr-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+			//
+			var un_val = !this.checked ? this.value : '';
+			if(un_val=="Stylist"){ $("#stylist-subs").hide();   $("#stylist-subs").find(".foi_check").attr('name','') }
+			if(un_val=="Photographer"){ $("#photogr-subs").hide();  $("#photogr-subs").find(".foi_check").attr('name','') }
+		});
     $( "#sortable" ).sortable({
 			change: function(event, ui) {
 				 var start_pos = ui.item.data('start_pos');
@@ -850,4 +924,4 @@ input[type=file]{ display:inline-block;}
    </body>
 
 </html>
-<?php $_SESSION['img_files']=""; $_SESSION['img_count']=1; ob_end_flush(); ?>
+<?php $_SESSION['img_files']=array(); $_SESSION['img_count']=1; ob_end_flush(); ?>

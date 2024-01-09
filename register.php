@@ -18,6 +18,7 @@ session_start();
 div.form-group{ width:100%; }
 .col-2,.col-4,.col-8,.col-10, .col-6{ float:left;}
 label.col-4 input, label.col-6 input, label.col-10 input{ width:auto; height:auto; margin-right:4px;}
+.sub_cats{ display:none;}
 </style>
 
 <script type="text/javascript">
@@ -323,7 +324,12 @@ $privatekey = "6LfQjysUAAAAAH7Rby-OwqWOmtG-Ok86w1xxisLt";
 						include_once(MN_url."control_panel/includes/conn.php");
 						$cur_date=date("Y-m-d H:i:s");
 						
-						$query = "INSERT INTO `Smart_FLC_mail_Details` (`First_Name`, `Gender`, `Height`, `Bust`, `Waist`, `Hips`, `HairColor`, `SkinColor`, `ShoesSize`, `EyesColor`, `Native_Language`, `Languages_Spoken`, `Date_Created`, `Last_Name`, `Cell_phone`, `Email1`, `Address`, `Nationality`, `DOB`, `DressSize`, `Weight`, images, `publish_photo`,`Resource_Type`, `Ethnicity`,`whatsapp`) VALUES('".$_POST["fname"]."', '".$_POST['gender']."', '".$_POST["height"]."', '".$_POST["bust"]."', '".$_POST['waist']."', '".$_POST["hips"]."', '".$_POST['hair']."', '".$_POST["skin"]."', '".$_POST["shoe"]."', '".$_POST['eyes']."', '".$_POST["mlang"]."', '".implode(",",$_POST["olang"])."', '".$cur_date."', '".$_POST["lname"]."', '".$_POST['cont_code'].$_POST['phone']."', '".$_POST["email"]."', '".$_POST["address"]."', '".$_POST['country']."', '".date('Y-m-d', strtotime($_POST['dob']))."', '".implode(",",$_POST['dress'])."', '".$_POST['weight']."', '".implode(",",$gallery)."', '".$_POST['publish_photo']."', '".implode(",",$_POST['category'])."', '".implode(",",$_POST['ethnicity'])."', '".$_POST['what_code'].$_POST['whatsapp']."'  )";
+						$new_sub_cat="";
+						if(isset($_POST['new_sub_cats'])){
+							$new_sub_cat=implode(",",$_POST['new_sub_cats']);
+						}	
+						
+						$query = "INSERT INTO `Smart_FLC_mail_Details` (`First_Name`, `Gender`, `Height`, `Bust`, `Waist`, `Hips`, `HairColor`, `SkinColor`, `ShoesSize`, `EyesColor`, `Native_Language`, `Languages_Spoken`, `Date_Created`, `Last_Name`, `Cell_phone`, `Email1`, `Address`, `Nationality`, `DOB`, `DressSize`, `Weight`, images, `publish_photo`,`Resource_Type`, `Ethnicity`,`whatsapp`, `new_sub_cats`) VALUES('".$_POST["fname"]."', '".$_POST['gender']."', '".$_POST["height"]."', '".$_POST["bust"]."', '".$_POST['waist']."', '".$_POST["hips"]."', '".$_POST['hair']."', '".$_POST["skin"]."', '".$_POST["shoe"]."', '".$_POST['eyes']."', '".$_POST["mlang"]."', '".implode(",",$_POST["olang"])."', '".$cur_date."', '".$_POST["lname"]."', '".$_POST['cont_code'].$_POST['phone']."', '".$_POST["email"]."', '".$_POST["address"]."', '".$_POST['country']."', '".date('Y-m-d', strtotime($_POST['dob']))."', '".implode(",",$_POST['dress'])."', '".$_POST['weight']."', '".implode(",",$gallery)."', '".$_POST['publish_photo']."', '".implode(",",$_POST['category'])."', '".implode(",",$_POST['ethnicity'])."', '".$_POST['what_code'].$_POST['whatsapp']."', '".$new_sub_cat."' )";
 						
 						$r = mysqli_query($url, $query) or die(mysqli_error($url));
 						if($r){
@@ -886,7 +892,7 @@ $privatekey = "6LfQjysUAAAAAH7Rby-OwqWOmtG-Ok86w1xxisLt";
                 <label for="inputCat" class="col-4 control-label">Category</label>
                 <div class="col-8">
                   <label class="col-4">
-                        <input value="Model" name="category[]" type="checkbox" class="cat_check">Model
+                        <input value="Model" name="category[]" type="checkbox" class="cat_check ">Model
                     </label>
                      <label class="col-4">
                         <input value="Actor" name="category[]" type="checkbox" class="cat_check">Actor
@@ -914,6 +920,41 @@ $privatekey = "6LfQjysUAAAAAH7Rby-OwqWOmtG-Ok86w1xxisLt";
                     </label>
                 </div>
               </div>
+              
+               <div class="form-group" style="display:none" >
+               <div class="tab_title" style="height: 1px; padding: 0; background:#a6a795"></div>
+                <label for="inputCat" class="col-4 control-label">Sub Category</label>
+                <div class="col-8">
+                <div id="stylist-subs" class="sub_cats">
+                <?php
+				$sub_cat_arr=array("Food", "Hair", "Make-up", "Hair & Make-up", "Prop stylist", "Prosthetic Stylist", "Wardrobe", "Others", "Out of Town");
+				
+				 foreach($sub_cat_arr as $sub_cat){ 
+				 
+				 ?>
+					 
+                  <label class="col-4">
+                        <input value="<?php echo $sub_cat; ?>" name="" type="checkbox" class="foi_check" ><?php echo $sub_cat; ?>
+                    </label>
+                 <?php }  ?>
+                 </div>
+                 <div id="photogr-subs" class="sub_cats">
+                 <?php
+				$sub_cat_arr=array("International", "Advertising Beauty", "Editorial", "Fashion", "Hair", "Jewellery", "Lifestyle", "Food", "Product/ Still Life", "Aerial", "Hotel", "Interior/ Architecture", "Landscape", "Children", "Wedding", "Car", "Out of Town", "Under Water Photography");
+				 
+				 foreach($sub_cat_arr as $sub_cat){ 
+				 ?>
+					 
+                  <label class="col-4">
+                        <input value="<?php echo $sub_cat; ?>" name="" type="checkbox" class="foi_check" ><?php echo $sub_cat; ?>
+                    </label>
+                 <?php } ?>
+                </div>
+                 
+                </div>
+                 
+              </div>
+              
                <div class="tab_title" style="height: 1px; padding: 0; background:#a6a795"></div>
 <div class="form-group">
                 <label for="inputEth" class="col-4 control-label">Ethnicity</label>
@@ -1885,6 +1926,7 @@ $privatekey = "6LfQjysUAAAAAH7Rby-OwqWOmtG-Ok86w1xxisLt";
                         // this part is progress bar
                         xhr: function () {
                             var xhr = new window.XMLHttpRequest();
+                            console.log(123);
                             xhr.upload.addEventListener("progress", function (evt) {
                                 if (evt.lengthComputable) {
                                     var percentComplete = evt.loaded / evt.total;
@@ -1911,6 +1953,17 @@ $privatekey = "6LfQjysUAAAAAH7Rby-OwqWOmtG-Ok86w1xxisLt";
 <script type="text/javascript">
 $(function(){
 $(".select2").select2();
+
+		 $('.cat_check').on('change', function() {
+			var val = this.checked ? this.value : '';
+			if(val=="Stylist"){ $("#stylist-subs").show();  $("#stylist-subs").parent().parent().show(); $("#stylist-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+			if(val=="Photographer"){ $("#photogr-subs").show();  $("#photogr-subs").parent().parent().show(); $("#photogr-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+			//
+			var un_val = !this.checked ? this.value : '';
+			if(un_val=="Stylist"){ $("#stylist-subs").hide();   $("#stylist-subs").find(".foi_check").attr('name','') }
+			if(un_val=="Photographer"){ $("#photogr-subs").hide();  $("#photogr-subs").find(".foi_check").attr('name','') }
+		});
+
 })
 </script>
 <style type="text/css">
@@ -1924,4 +1977,4 @@ input[type=file]{ display:inline-block;}
  
   </body>
 </html>
-<?php $_SESSION['img_files']=""; $_SESSION['img_count']=1; ob_end_flush(); ?>
+<?php $_SESSION['img_files']=array(); $_SESSION['img_count']=1; ob_end_flush(); ?>

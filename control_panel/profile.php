@@ -1,4 +1,8 @@
-<?php $active="home"; ?>
+<?php
+error_reporting(0);
+ob_start();
+session_start();
+ $active="home"; ?>
 
 <?php include_once('includes/header.php'); ?>
 
@@ -14,12 +18,12 @@ include("includes/conn.php");
 //
 	if(isset($_POST['password'])){
 		$msg=""; $error="";
-		if($_POST['password']!=""){
+		if($_POST['password']!="" && $_POST['password']!="enthade"){
 			//
 			if($_POST['password']!=""){
 				$pass = mysqli_real_escape_string($url, $_POST['password']);
 				$pass=md5($pass);
-				$query = "UPDATE `".TB_pre."admin` SET `password` = '".$pass."' WHERE id=".$_SESSION['user_id'];
+				$query = "UPDATE `".TB_pre."fdl_bookers_gin` SET `user_pass` = '".$pass."' WHERE user_id=".$_SESSION['user_id'];
 				$r = mysqli_query($url, $query) or die(mysqli_error($url));
 				if($r){
 					  $msg.= "Login password updated successfully";
@@ -73,7 +77,7 @@ include("includes/conn.php");
               
                 <div class="form-group">
                       <label> Password</label>
-                      <input type="password" name="password" value="password" required />
+                      <input type="password" name="password" value="enthade" required />
                     </div>
             </div><!-- /.box-body -->
             <div class="box-footer">

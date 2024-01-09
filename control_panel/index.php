@@ -3,7 +3,7 @@ error_reporting(0);
 ob_start();
 session_start();
 require_once("includes/conn.php");
-var_dump($_SERVER['REMOTE_ADDR']);
+//var_dump($_SERVER['REMOTE_ADDR']);
 $msg = "";
 require_once('../classes/recaptchalib.php');
 $publickey = "6LfQjysUAAAAAKaZjpZiL0AmNTGX1ZdNw9pwnepl"; // you got this from the signup page
@@ -21,7 +21,7 @@ if($_POST){
 	$pass = mysqli_real_escape_string($url, $_POST['password']);
 	$pass=md5($pass);
 	if($email && $pass){
-		$query = "SELECT * FROM `".TB_pre."lcfd_users_login` WHERE `user_email`='$email' AND `user_pass`='$pass' AND user_role > 1";
+		$query = "SELECT * FROM `".TB_pre."fdl_bookers_gin` WHERE `user_email`='$email' AND `user_pass`='$pass' AND user_role > 1";
 		$r = mysqli_query($url, $query) or die(mysqli_error($url));
 		if(mysqli_num_rows($r) == 1){
 			$_SESSION["logged"] = "true";
@@ -29,13 +29,17 @@ if($_POST){
 			$_SESSION['user_id']=$res->user_id;
 			$_SESSION['user_name']=$res->user_name;
 			$_SESSION['last_login']=$res->last_login;
+			$_SESSION['user_role']=$res->user_role;
+		
 			if($res->user_id==1 && $res->user_role==10){
-				mysqli_query($url, "UPDATE `".TB_pre."lcfd_users_login` SET last_login='".date("Y-m-d H:i:s")."' WHERE user_id=".$_SESSION['user_id']);
+				mysqli_query($url, "UPDATE `".TB_pre."fdl_bookers_gin` SET last_login='".date("Y-m-d H:i:s")."' WHERE user_id=".$_SESSION['user_id']);
+					//echo $res->user_id.' , '.$res->user_role; exit;
+					//var_dump($_SESSION['user_id']); exit;
 				header("location:home.php");
 			}
 			else{
-				//header("location:authenticate.php");
-				header("location:home.php");
+				header("location:authenticate.php");
+				//header("location:home.php");
 			}
 		}
 		else{

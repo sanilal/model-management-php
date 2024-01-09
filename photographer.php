@@ -63,24 +63,14 @@ $type_var="photographer";
 
 					<Select class="form-control" id="categories" name="categories">
                         <option value="">All</option>
-                        <option <?php if($category=='International'){ echo 'selected="selected"';} ?>>International</option>
-                        <option <?php if($category=='Lifestyle'){ echo 'selected="selected"';} ?>>Lifestyle</option>
-                        <option <?php if($category=='Portfolio'){ echo 'selected="selected"';} ?>>Portfolio</option>
-                        <option <?php if($category=='Fashion'){ echo 'selected="selected"';} ?>>Fashion</option>
-                        <option <?php if($category=='Product<'){ echo 'selected="selected"';} ?>>Product</option>
-                        <option <?php if($category=='Children'){ echo 'selected="selected"';} ?>>Children</option>
-                        <option <?php if($category=='Events'){ echo 'selected="selected"';} ?>>Events</option>
-                        <option <?php if($category=='Sports/Dance'){ echo 'selected="selected"';} ?>>Sports/Dance</option>
-                        <option <?php if($category=='Advertising'){ echo 'selected="selected"';} ?>>Advertising</option>
-                        <option <?php if($category=='Hotel'){ echo 'selected="selected"';} ?>>Hotel</option>
-                        <option <?php if($category=='Wedding'){ echo 'selected="selected"';} ?>>Wedding</option>
-                        <option <?php if($category=='Car'){ echo 'selected="selected"';} ?>>Car</option>
-                        <option <?php if($category=='Beauty'){ echo 'selected="selected"';} ?>>Beauty</option>
-                        <option <?php if($category=='Landscape'){ echo 'selected="selected"';} ?>>Landscape</option>
-                        <option <?php if($category=='Editorial'){ echo 'selected="selected"';} ?>>Editorial</option>
-                        <option <?php if($category=='Food'){ echo 'selected="selected"';} ?>>Food</option>
-                        <option <?php if($category=='Jewellery'){ echo 'selected="selected"';} ?>>Jewellery</option>
-                        <option <?php if($category=='Interior/Arch'){ echo 'selected="selected"';} ?>>Interior/Arch</option>
+                        <?php
+				$sub_cat_arr=array("International", "Advertising Beauty", "Editorial", "Fashion", "Hair", "Jewellery", "Lifestyle", "Food", "Product/ Still Life", "Aerial", "Hotel", "Interior/ Architecture", "Landscape", "Children", "Wedding", "Car", "Out of Town", "Under Water Photography");
+				 
+				 foreach($sub_cat_arr as $sub_cat){ 
+				 ?>
+                        <option <?php if($category==$sub_cat){ echo 'selected="selected"';} ?>><?php echo $sub_cat; ?></option>
+                 <?php } ?>
+                        
                     </Select>
                             
 

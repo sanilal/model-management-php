@@ -79,7 +79,7 @@ class Login {
                 $this->user_name = $this->db_connection->real_escape_string($_POST['user_name']);
 				
                 // database query, getting all the info of the selected user
-		$checklogin = $this->db_connection->query("SELECT user_id,user_name, user_email, user_pass, user_role FROM lcfd_users_login WHERE user_name = '".$this->user_name."' or user_email = '".$this->user_name."'");
+		$checklogin = $this->db_connection->query("SELECT user_id,user_name, user_email, user_pass, user_role FROM fdl_bookers_gin WHERE user_name = '".$this->user_name."' or user_email = '".$this->user_name."'");
 				
                 // if this user exists
 				
@@ -180,7 +180,7 @@ class Login {
 
 		$val = $this->db_connection->real_escape_string($id);
 		
-		$stmt=$this->db_connection->query("SELECT user_id,user_name, user_email,user_role,signature FROM lcfd_users_login WHERE user_id=$val");
+		$stmt=$this->db_connection->query("SELECT user_id,user_name, user_email,user_role,signature FROM fdl_bookers_gin WHERE user_id=$val");
 		
 		return $stmt;
             

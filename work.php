@@ -24,6 +24,7 @@ height: 100%;}
          <?php 
 					require_once(MN_url."classes/Media.php");
 					$media= new Media();
+					//echo mysqli_real_escape_string($db_connection,$_REQUEST['cat-id']);
 					$cat_res=$media->getCategory($_REQUEST['cat-id']);
 					$cat_row=$cat_res->fetch_object();
 					 ?>

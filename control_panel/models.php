@@ -1,4 +1,8 @@
-<?php $active="model"; ?>
+<?php
+error_reporting(0);
+ob_start();
+session_start();
+ $active="model"; ?>
 <?php include_once('includes/header.php'); ?>
 
  <!-- Left side column. contains the sidebar -->
@@ -213,6 +217,7 @@ if(isset($_GET['remove_res'])){
                         <th>Category</th>
                         <th>Ethnicity</th>
                         <th>Action</th>
+                        <th>Sub_cat</th>
                       </tr>
                     </thead>
                    
@@ -269,7 +274,7 @@ if(isset($_GET['remove_res'])){
 		"order": [[ 0, "desc" ]],
 		"columnDefs": [
             {
-                "targets": [ 0,2,6,7,8,9 ],
+                "targets": [ 0,2,6,7,8,9,11 ],
                 "visible": false
             },
 			{

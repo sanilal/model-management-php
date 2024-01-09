@@ -1,4 +1,8 @@
-<?php $active="model"; ?>
+<?php
+error_reporting(0);
+ob_start();
+session_start();
+ $active="model"; ?>
 <?php include_once('includes/header.php'); ?>
 
  <!-- Left side column. contains the sidebar -->
@@ -14,16 +18,13 @@ if(isset($_GET['p_id']) && isset($_GET['status']) ){
 
 if(isset($_GET['remove_res'])){
 	$id = $_GET['remove_res'];
-	$pr_img_res=mysqli_fetch_object(mysqli_query($url,"select product_img,gallery_imgs from `".TB_pre."products` WHERE `product_id`='$id'"));
-	$query = "DELETE FROM `".TB_pre."products` WHERE `product_id`='$id'";
+	//$pr_img_res=mysqli_fetch_object(mysqli_query($url,"select images from `Smart_FLC_mail_Details` WHERE `Mailer_ID`='$id'"));
+	$query = "DELETE FROM `Smart_FLC_Resource_Details` WHERE `Resource_ID`='$id'";
 	$r = mysqli_query($url, $query) or die(mysqli_error($url));
-	unlink( "uploads/".$pr_img_res->product_img);
-	$g_imgs=explode(",",$pr_img_res->gallery_imgs);
-	foreach($g_imgs as $g_img){
-		unlink( "uploads/".$g_img->product_img);
-	}
+	//unlink( "uploads/".$pr_img_res->product_img);
+	
 	if($r){
-		$msg = "The selected item deleted successfully.";
+		$msg = "The selected model/talent deleted successfully.";
 	}
 }
 //$sql="select * from `".TB_pre."Smart_FLC_Resource_Details` ORDER BY First_Name LIMIT 100 ";
@@ -34,6 +35,7 @@ if(isset($_GET['remove_res'])){
 hr{ margin:10px 0; clear:both;}
 #range_2,#range_1{ display:none}
 .opac_div{ opacity:0.5;filter:alpha(opacity=50); width:95%; margin-top:0; margin-left:40px; position:absolute; height:50px; background:#fff; z-index:10;}
+.sub_cats{ display:none;}
 </style>
       <!-- =============================================== -->
 
@@ -144,6 +146,39 @@ hr{ margin:10px 0; clear:both;}
                 <hr style="width:100%;"/>
               </div>
               
+              <div class="form-group" style="display:none" >
+                <label for="inputCat" class="col-sm-3 control-label">Sub Category</label>
+                <div class="col-sm-9">
+                <div id="stylist-subs" class="sub_cats">
+                <?php
+				$sub_cat_arr=array("Food", "Hair", "Make-up", "Hair & Make-up", "Prop stylist", "Prosthetic Stylist", "Wardrobe", "Others", "Out of Town");
+				
+				 foreach($sub_cat_arr as $sub_cat){ 
+				 
+				 ?>
+					 
+                  <label class="col-sm-4">
+                        <input value="<?php echo $sub_cat; ?>" name="" type="checkbox" class="foi_check" ><?php echo $sub_cat; ?>
+                    </label>
+                 <?php }  ?>
+                 </div>
+                 <div  id="photogr-subs" class="sub_cats">
+                 <?php
+				$sub_cat_arr=array("International", "Advertising Beauty", "Editorial", "Fashion", "Hair", "Jewellery", "Lifestyle", "Food", "Product/ Still Life", "Aerial", "Hotel", "Interior/ Architecture", "Landscape", "Children", "Wedding", "Car", "Out of Town", "Under Water Photography");
+				 
+				 foreach($sub_cat_arr as $sub_cat){ 
+				 ?>
+					 
+                  <label class="col-sm-4">
+                        <input value="<?php echo $sub_cat; ?>" name="" type="checkbox" class="foi_check" ><?php echo $sub_cat; ?>
+                    </label>
+                 <?php } ?>
+                </div>
+                 
+                </div>
+                 <hr style="width:100%;"/>
+              </div>
+              
                <div class="form-group">
                 <label for="inputEth" class="col-sm-3 control-label">Ethnicity</label>
                 <div class="col-sm-9">
@@ -230,6 +265,7 @@ hr{ margin:10px 0; clear:both;}
                         <th>Category</th>
                         <th>Ethnicity</th>
                         <th>Action</th>
+                        <th>Sub_cat</th>
                       </tr>
                     </thead>
                    
@@ -279,7 +315,7 @@ hr{ margin:10px 0; clear:both;}
 		"order": [[ 0, "desc" ]],
 		"columnDefs": [
             {
-                "targets": [ 0,2,6,7,8,9 ],
+                "targets": [ 0,2,6,7,8,9,11 ],
                 "visible": false
             },
 			{
@@ -408,6 +444,11 @@ hr{ margin:10px 0; clear:both;}
 		  return $(this).val();
 		}).get(); 
 		console.log(ethnicity);
+		//
+		var sub_cat_val = $("input.foi_check:checkbox:checked").map(function(){
+		  return $(this).val();
+		}).get(); 
+		console.log(sub_cat_val);
 		//var ethnicity=$("#select_eth").val();
 		var gender=$("#inputGender").val();
 		var nationality=$("#inputCountry").val();
@@ -437,6 +478,7 @@ hr{ margin:10px 0; clear:both;}
 			.column(9).search(ethnicity, true, true)
 			.column(7).search(age_val,false, false)
 			.column(5).search(height_val,false, false)
+			.column(11).search(sub_cat_val, true, true)
 			.draw();	
 		
 			
@@ -475,6 +517,19 @@ hr{ margin:10px 0; clear:both;}
 		  $(function () {
 			//Initialize Select2 Elements
 			$(".select2").select2();
+			//
+			 $('.cat_check').on('change', function() {
+				var val = this.checked ? this.value : '';
+				if(val=="Stylist"){ $("#stylist-subs").show();  $("#stylist-subs").parent().parent().show(); $("#stylist-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+				if(val=="Photographer"){ $("#photogr-subs").show();  $("#photogr-subs").parent().parent().show(); $("#photogr-subs").find(".foi_check").attr('name','new_sub_cats[]') }
+				//
+				var un_val = !this.checked ? this.value : '';
+				if(un_val=="Stylist"){ $("#stylist-subs").hide();   $("#stylist-subs").find(".foi_check").attr('name','');
+				$('#stylist-subs .foi_check').prop('checked', false); }
+				if(un_val=="Photographer"){ $("#photogr-subs").hide();  $("#photogr-subs").find(".foi_check").attr('name','');
+				$('#photogr-subs .foi_check').prop('checked', false); }
+			});
+			
 		  })
 	  </script>
   </body>

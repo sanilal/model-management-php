@@ -22,6 +22,12 @@
             
             <li class="header">MAIN NAVIGATION</li>
             <?php if($_SESSION['user_id']==1){ ?>
+            <li class="treeview <?php if($active=="super_dash"){ echo "active";} ?>">
+              <a href="super-dashboard.php">
+                <i class="fa fa-dashboard"></i>
+                <span>Reports</span>
+              </a>
+            </li>
             
              <li class="treeview <?php if($active=="token"){ echo "active";} ?>">
               <a href="token.php">
@@ -29,8 +35,25 @@
                 <span>Security Token</span>
               </a>
             </li>
+            <li class="treeview <?php if($active=="bookers"){ echo "active";} ?>">
+              <a href="bookers.php">
+                <i class="fa fa-users"></i>
+                <span>Bookers</span>
+                <i class="fa fa-user pull-right"></i>
+              </a>
+               	<ul class="treeview-menu">
+                    <li><a href="bookers.php"><i class="fa fa-folder-open"></i> View</a></li>
+                    <li><a href="add-booker.php"><i class="fa fa-plus-circle"></i> Add</a></li>
+				</ul>
+             </li>
             
             <?php } else{ ?>
+            <li class="treeview <?php if($active=="dash"){ echo "active";} ?>">
+              <a href="dashboard.php">
+                <i class="fa fa-dashboard"></i>
+                <span>Reports</span>
+              </a>
+            </li>
              <li class="treeview <?php if($active=="model"){ echo "active";} ?>">
               <a href="models.php">
                 <i class="fa fa-picture-o"></i>

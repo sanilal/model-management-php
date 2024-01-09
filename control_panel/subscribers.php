@@ -1,4 +1,8 @@
-<?php $active="subscribers"; ?>
+<?php
+error_reporting(0);
+ob_start();
+session_start();
+ $active="subscribers"; ?>
 <?php include_once('includes/header.php'); ?>
 
  <!-- Left side column. contains the sidebar -->
