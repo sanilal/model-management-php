@@ -238,7 +238,7 @@ PO Box 283795,
    
 	
 </script>
- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJYjGEXwtlxpoO1BRmVU-k1Wkd5_j9MT0&callback=initMap"
+ <script src="https://maps.googleapis.com/maps/api/js?key=your_api_key&callback=initMap"
     async defer></script>
   </body>
 </html>
